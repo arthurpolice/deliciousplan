@@ -108,6 +108,7 @@ def get_recipe(request, id):
         "recipe": recipe_dict,
         "ingredients": ingredients
     }
+    print(recipe_info)
     return JsonResponse({"info": recipe_info})
 
 @api_view(['POST'])
