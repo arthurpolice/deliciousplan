@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 15vh;
+  margin-bottom: 5vh;
+}
+
+.subHeader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0rem 2rem;
+}
+
+.recipeName {
+  width: 33vw;
+}
+
+.servings {
+  width: 10vw;
+}
+
+@media screen and (max-width: 750px) {  
+  .header{
+    flex-direction: column;
+  }
+  .recipeName {
+    width: 100%;
+    padding-right: 2rem;
+  }
+  .servings {
+    width: 30vw;
+  }
+  .buttons {
+    flex-direction: row !important;
+  }
+  .form {
+    margin: 2rem 0;
+  }
+}

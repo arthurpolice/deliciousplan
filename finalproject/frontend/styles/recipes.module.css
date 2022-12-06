@@ -1,0 +1,125 @@
+
+.hidden {
+  display: none;
+}
+
+.custombg {
+  height: 100vh;
+  width: 100vw;
+}
+
+.background {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  filter:blur(2px)
+}
+
+.parallax {
+  min-height: 1000px;
+  width: 100%;
+}
+
+.paper {
+  position: absolute;
+  max-width: 95vw;
+  z-index: 800;
+  border-radius: 5px;
+  width: 95vw;
+  background-color: rgba(255, 255, 255, 0.9);
+
+}
+
+.main {
+  margin-top: 5vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  justify-content:space-evenly;   
+}
+
+.form {
+  margin-top: 5vh;  
+  width: 100%;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.ingredientssection {
+  padding-left: 30px;
+}
+
+.title {
+  text-align: center;
+  margin-top: 0;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+}
+
+.recipeContainer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  bottom: 66%;
+}
+
+.floatingButtons {
+  display: flex;
+  justify-content: right;
+  padding-top: 1rem;
+}
+
+.fabAdd {
+  margin-right: 1vw;
+  z-index: 900;
+}
+
+.fabHeart {
+  margin-right: 1vw;
+  z-index: 900;
+  background-color: rgb(255, 255, 255);
+}
+
+.fabStar {
+  margin-right: 1vw;
+  z-index: 900;
+  background-color: rgb(255, 255, 255);
+}
+
+.fabDelete {
+  margin-right: 1vw;
+  margin-bottom: 1vh;
+}
+
+.heartIcon {
+  font-size: 1.5rem;
+  color: rgb(173, 19, 19);
+}
+
+.starIcon {
+  font-size: 1.5rem;
+  color: rgb(255, 255, 0);
+}
+
+.trashIcon {
+  font-size: 1.5rem;
+}
+
+@media screen and (min-width: 1000px) {
+  .paper {
+    width: 50vw;
+  }
+  .summary {
+    flex-direction: row;
+    padding-bottom: 3vh;
+  }
+}

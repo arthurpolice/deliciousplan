@@ -1,0 +1,51 @@
+.catalogitem {
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+}
+
+.card {
+  height: 100%;
+  border-radius: 10px;
+  min-width: 345px;
+  min-height: 388px;
+  cursor: pointer;  
+}
+
+.content {
+  height: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.title {
+  text-align: center;
+}
+
+.info {
+  display: flex;
+  justify-content: space-around;
+}
+
+.restrictions {
+  margin-top: auto;
+  padding-right: 5px;
+  display: flex;
+  justify-content: right;
+}
+
+.restriction {
+  padding: 0 0.5rem;
+}
+
+.source {
+  margin-top: revert;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 2vh;
+}

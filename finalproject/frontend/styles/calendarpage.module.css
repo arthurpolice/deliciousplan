@@ -1,0 +1,38 @@
+.calendarDiv {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paper {
+  display: flex;
+  width: 70vw;
+  min-height: 70vh;
+  height: fit-content;
+  border-radius: 5px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.infoDisplay {
+  width: 30vw;
+  background-color: #2acc68;
+  min-height: 70vh;
+  border-top-left-radius: 5px;
+}
+
+@media screen and (max-width: 1050px) {
+  .paper {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+  }
+  .infoDisplay {
+    width: 100%;
+  }
+  .calendarDiv {
+    margin-top: 15vh;
+  }
+}
+

@@ -1,0 +1,50 @@
+.row {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1.5rem;
+  width: 80vw;
+}
+
+.ingredient {
+  width: 40vw;
+}
+
+.amount {
+  width: 10vw;
+}
+
+.unit {
+  width: 10vw;
+}
+
+.ingredientimagecontainer {
+  height: 64px;
+  width: 64px;
+  position: relative;
+  border-radius: 100%;
+  flex-shrink: 0;
+  background-color: white;
+}
+
+.ingredientimage {
+  border-radius: 100%;
+  object-fit: contain;
+}
+
+@media screen and (max-width: 750px) {
+  .row {
+    padding: 0.5rem;
+    width: 100vw;
+  }
+  .ingredientimagecontainer {
+    width: 48px;
+    width: 48px;
+  }
+  .amount {
+    width: 20vw;
+  }
+  .unit {
+    width: 20vw;
+  }
+}
