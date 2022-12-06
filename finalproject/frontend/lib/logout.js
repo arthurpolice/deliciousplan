@@ -1,5 +1,5 @@
 export async function logout(route, token, changeToken) {
-  const sender = await fetch('http://127.0.0.1:8000/logout', {
+  const sender = await fetch('https://riko.pythonanywhere.com/logout', {
     method: 'POST',
     headers: {
       'Authorization': `Token ${token}`

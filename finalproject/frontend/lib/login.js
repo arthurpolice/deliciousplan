@@ -1,5 +1,5 @@
 export async function login(username, password) {
-  const login = await fetch('http://127.0.0.1:8000/login', {
+  const login = await fetch('https://riko.pythonanywhere.com/login', {
     method: 'POST',
     headers: {
       "Accept": "application/json",

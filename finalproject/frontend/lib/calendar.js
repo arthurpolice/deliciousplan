@@ -1,5 +1,5 @@
 export async function dayFetcher(token, date, setData, setTotalCalories) {
-  const request = await fetch('http://127.0.0.1:8000/get_daily_plan', {
+  const request = await fetch('https://riko.pythonanywhere.com/get_daily_plan', {
     method: 'POST',
     headers: {
       "Accept": "application/json",
@@ -24,7 +24,7 @@ export async function dayFetcher(token, date, setData, setTotalCalories) {
 
 
 export async function removeRecipe(token, recipeId, date, mealType) {
-  const sender = await fetch('http://127.0.0.1:8000/daily_plan/remove', {
+  const sender = await fetch('https://riko.pythonanywhere.com/daily_plan/remove', {
     method: 'POST',
     headers: {
       "Accept": "application/json",

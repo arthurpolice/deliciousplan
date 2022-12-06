@@ -1,5 +1,5 @@
 export async function getAllRecipeIds() {
-  const recipes = await fetch('http://127.0.0.1:8000/get_all_recipes', {
+  const recipes = await fetch('https://riko.pythonanywhere.com/get_all_recipes', {
     method: 'POST'
   })
   const json_recipes = await recipes.json()
@@ -14,7 +14,7 @@ export async function getAllRecipeIds() {
 }
 
 export async function getRecipeData(id) {
-  const recipe_info = await fetch(`http://127.0.0.1:8000/get_recipe/${id}`, {
+  const recipe_info = await fetch(`https://riko.pythonanywhere.com/get_recipe/${id}`, {
     method: 'POST'
   })
   const json_recipe_info = await recipe_info.json()
@@ -23,7 +23,7 @@ export async function getRecipeData(id) {
 }
 
 export async function deleteRecipe(recipeId, token, route) {
-  const sender = await fetch('http://127.0.0.1:8000/remove_recipe', {
+  const sender = await fetch('https://riko.pythonanywhere.com/remove_recipe', {
     method: 'POST',
     headers: {
       'Accept': "application/json",
@@ -40,7 +40,7 @@ export async function deleteRecipe(recipeId, token, route) {
 }
 
 export async function addMeal(recipeId, mealType, date, servings, token, route) {
-  const sender = await fetch('http://127.0.0.1:8000/daily_plan/add', {
+  const sender = await fetch('https://riko.pythonanywhere.com/daily_plan/add', {
     method: 'POST',
     headers: {
       'Accept': "application/json",

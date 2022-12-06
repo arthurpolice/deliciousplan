@@ -1,5 +1,5 @@
 export async function sendUrl(url, route, token, changeToken, setErrorMessage, setLoading, handleOpen) {
-  const sender = await fetch('http://127.0.0.1:8000/extract_recipe', {
+  const sender = await fetch('https://riko.pythonanywhere.com/extract_recipe', {
     method: 'POST',
     headers: {
       'Accept': "application/json",

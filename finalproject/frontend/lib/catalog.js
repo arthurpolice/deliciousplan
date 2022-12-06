@@ -1,5 +1,5 @@
 export async function getRecipeCatalog() {
-  const response = await fetch('http://127.0.0.1:8000/get_all_recipes',{
+  const response = await fetch('https://riko.pythonanywhere.com/get_all_recipes',{
     method: 'POST',
     headers: {
       "Accept": "application/json",

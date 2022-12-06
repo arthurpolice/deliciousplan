@@ -1,5 +1,5 @@
 export async function getAllIngredients() {
-  const response = await fetch('http://127.0.0.1:8000/get_all_ingredients', {
+  const response = await fetch('https://riko.pythonanywhere.com/get_all_ingredients', {
     method: 'POST',
     headers: {
       "Accept": "application/json",
@@ -12,7 +12,7 @@ export async function getAllIngredients() {
 }
 
 export async function getAllMeasures() {
-  const response = await fetch('http://127.0.0.1:8000/get_all_measures', {
+  const response = await fetch('https://riko.pythonanywhere.com/get_all_measures', {
     method: 'POST',
     headers: {
       "Accept": "application/json",
@@ -44,7 +44,7 @@ export function makeRecipeObject() {
 // Data sender
 
 export async function logRecipe(recipe, router, token, changeToken, handleOpen) {
-  const response = await fetch('http://127.0.0.1:8000/log_custom', {
+  const response = await fetch('https://riko.pythonanywhere.com/log_custom', {
     method: 'POST',
     headers: {
       "Accept": "application/json",
