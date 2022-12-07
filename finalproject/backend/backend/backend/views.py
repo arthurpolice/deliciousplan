@@ -165,14 +165,10 @@ def log_recipe(dictionary):
     if not validators.url(new_recipe.url):
         new_recipe.url = f"/recipes/{new_recipe.pk}"
     new_recipe.save()
-    try:
-        print(new_recipe)
-        ingredients = new_recipe.recipe_ingredients.all()
-        print(ingredients)
-        if ingredients == None or ingredients.length() == 0:
-            new_recipe.delete()
-            raise Exception('Invalid data.')
-    except:
+    print(new_recipe)
+    ingredients = new_recipe.recipe_ingredients.all()
+    print(ingredients)
+    if ingredients == None or ingredients.length() == 0:
         new_recipe.delete()
         raise Exception('Invalid data.')
     # Return the recipe object
