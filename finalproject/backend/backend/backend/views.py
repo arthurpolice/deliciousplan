@@ -166,13 +166,16 @@ def log_recipe(dictionary):
         new_recipe.url = f"/recipes/{new_recipe.pk}"
     new_recipe.save()
     try:
-        if new_recipe.recipe_ingredients.all() == None or new_recipe.recipe_ingredients.all().length() == 0:
-            new_recipe.remove()
+        print(new_recipe)
+        ingredients = new_recipe.recipe_ingredients.all()
+        print(ingredients)
+        if ingredients == None or ingredients.length() == 0:
+            new_recipe.delete()
             raise Exception('Invalid data.')
     except:
-        new_recipe.remove()
+        new_recipe.delete()
         raise Exception('Invalid data.')
-    # Return the recipe's ID
+    # Return the recipe object
     return new_recipe
 
 
