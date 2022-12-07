@@ -11,7 +11,6 @@ export async function dayFetcher(token, date, setData, setTotalCalories) {
     })
   })
   const response = await request.json()
-  console.log(response)
   if (response.day) {
     setData(response.day)
     setTotalCalories(response.day.totalCalories)

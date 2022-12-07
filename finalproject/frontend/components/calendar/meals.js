@@ -24,24 +24,41 @@ export default function Meals({ token, date }) {
   useEffect(() => {
     dayFetcher(token, date, setData, setTotalCalories)
   }, [token, date])
-  
+
   useEffect(() => {
+    if (data) {
     totalCalories
       ? setDayCalories(`Calories: ${Math.round(totalCalories)}`)
       : setDayCalories('Day not yet registered.')
-    totalCalories && data.targetCalories ? setTargetCalories(`/${data.targetCalories}`) : setTargetCalories(null)
+    totalCalories && data.targetCalories
+      ? setTargetCalories(`/${data.targetCalories}`)
+      : setTargetCalories(null)
     totalCalories
       ? setHelperMessage(null)
       : setHelperMessage('Please add a meal from a recipe page.')
-  }, [totalCalories, data.targetCalories])
-  
+    }
+  }, [totalCalories, data])
+
   useEffect(() => {
-    data.bf ? setBreakfastHeader('Breakfast:') :setBreakfastHeader(null)
+    if (data) {
+    data.bf ? setBreakfastHeader('Breakfast:') : setBreakfastHeader(null)
     data.lun ? setLunchHeader('Lunch:') : setLunchHeader(null)
     data.din ? setDinnerHeader('Dinner:') : setDinnerHeader(null)
     data.extra ? setExtraHeader('Extra:') : setExtraHeader(null)
-  }, [data.bf, data.lun, data.din, data.extra])
+    }
+  }, [data])
 
+  if (!data) {
+    return (
+      <>
+        <Typography color={'white'} variant='h5' className={styles.date}>
+          {date.toLocaleDateString('en-GB', options)}
+        </Typography>
+        <br />
+        <Typography color={'white'} variant='h6' className={styles.calories}>Please log in.</Typography>
+      </>
+    )
+  }
   return (
     <>
       <Typography color={'white'} variant='h5' className={styles.date}>
@@ -58,9 +75,7 @@ export default function Meals({ token, date }) {
       {totalCalories ? (
         <>
           <div className={styles.mealRow}>
-            <span className={styles.mealName}>
-              {breakfastHeader}
-            </span>
+            <span className={styles.mealName}>{breakfastHeader}</span>
             <br />
             <Meal
               data={data.bf}
@@ -70,9 +85,7 @@ export default function Meals({ token, date }) {
             />
           </div>
           <div className={styles.mealRow}>
-            <span className={styles.mealName}>
-              {lunchHeader}
-            </span>
+            <span className={styles.mealName}>{lunchHeader}</span>
             <br />
             <Meal
               data={data.lun}
@@ -82,9 +95,7 @@ export default function Meals({ token, date }) {
             />
           </div>
           <div className={styles.mealRow}>
-            <span className={styles.mealName}>
-              {dinnerHeader}
-            </span>
+            <span className={styles.mealName}>{dinnerHeader}</span>
             <br />
             <Meal
               data={data.din}
@@ -94,9 +105,7 @@ export default function Meals({ token, date }) {
             />
           </div>
           <div className={styles.mealRow}>
-            <span className={styles.mealName}>
-              {extraHeader}
-            </span>
+            <span className={styles.mealName}>{extraHeader}</span>
             <br />
             <Meal
               data={data.extra}
@@ -110,4 +119,3 @@ export default function Meals({ token, date }) {
     </>
   )
 }
-
