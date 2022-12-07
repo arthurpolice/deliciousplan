@@ -123,14 +123,14 @@ def extract_recipe_from_url(request):
         except:
             recipe_info = recipe_url_lookup(recipe_url)
             # Log the recipe to the database
-            recipe = log_recipe(recipe_info)
+            try:
+                recipe = log_recipe(recipe_info)
+            except:
+                return JsonResponse({"error": "Invalid URL!"})
         # Return recipe's ID
         return JsonResponse({"id": recipe.id})
     else:
         return JsonResponse({"error": "Invalid URL!"})
-
-# USE RANDOM RECIPE API REQUEST TO POPULATE THE DATABASE!
-
 
 def log_recipe(dictionary):
     # Step 1:
@@ -165,7 +165,13 @@ def log_recipe(dictionary):
     if not validators.url(new_recipe.url):
         new_recipe.url = f"/recipes/{new_recipe.pk}"
     new_recipe.save()
-    # Save recipe (can i do recipe.pk after saving to get its newly assigned id?)
+    try:
+        if new_recipe.recipe_ingredients.all() == None or new_recipe.recipe_ingredients.all().length() == 0:
+            new_recipe.remove()
+            raise Exception('Invalid data.')
+    except:
+        new_recipe.remove()
+        raise Exception('Invalid data.')
     # Return the recipe's ID
     return new_recipe
 
