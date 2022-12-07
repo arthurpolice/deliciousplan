@@ -64,7 +64,9 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'backend.urls'
 
 CORS_ALLOWED_ORIGINS = [
-    "delicious-plan.vercel.app",    
+    "https://delicious-plan.vercel.app",
+    '**',
+    '*'   
 ]
 
 TEMPLATES = [
