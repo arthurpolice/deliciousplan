@@ -7,6 +7,13 @@ import styles from './calendar.module.css'
 export default function Meals({ token, date }) {
   const [data, setData] = useState({})
   const [totalCalories, setTotalCalories] = useState(null)
+  const [dayCalories, setDayCalories] = useState('Loading...')
+  const [targetCalories, setTargetCalories] = useState('')
+  const [helperMessage, setHelperMessage] = useState(null)
+  const [breakfastHeader, setBreakfastHeader] = useState(null)
+  const [lunchHeader, setLunchHeader] = useState(null)
+  const [dinnerHeader, setDinnerHeader] = useState(null)
+  const [extraHeader, setExtraHeader] = useState(null)
   const options = {
     weekday: 'long',
     year: 'numeric',
@@ -17,28 +24,42 @@ export default function Meals({ token, date }) {
   useEffect(() => {
     dayFetcher(token, date, setData, setTotalCalories)
   }, [token, date])
+  
+  useEffect(() => {
+    totalCalories
+      ? setDayCalories(`Calories: ${Math.round(totalCalories)}`)
+      : setDayCalories('Day not yet registered.')
+    totalCalories && data.targetCalories ? setTargetCalories(`/${data.targetCalories}`) : setTargetCalories(null)
+    totalCalories
+      ? setHelperMessage(null)
+      : setHelperMessage('Please add a meal from a recipe page.')
+  }, [totalCalories, data.targetCalories])
+  
+  useEffect(() => {
+    data.bf ? setBreakfastHeader('Breakfast:') :setBreakfastHeader(null)
+    data.lun ? setLunchHeader('Lunch:') : setLunchHeader(null)
+    data.din ? setDinnerHeader('Dinner:') : setDinnerHeader(null)
+    data.extra ? setExtraHeader('Extra:') : setExtraHeader(null)
+  }, [data.bf, data.lun, data.din, data.extra])
+
   return (
     <>
       <Typography color={'white'} variant='h5' className={styles.date}>
         {date.toLocaleDateString('en-GB', options)}
       </Typography>
       <Typography color={'white'} variant='h6' className={styles.calories}>
-        {totalCalories
-          ? `Calories: ${Math.round(totalCalories)}`
-          : 'Day not yet registered.'}
-        {totalCalories && data.targetCalories
-          ? `/${data.targetCalories}`
-          : null}
+        {dayCalories}
+        {targetCalories}
       </Typography>
       <br />
       <Typography color={'white'} variant='h6' className={styles.calories}>
-        {totalCalories ? null : 'Please add a meal from a recipe page.'}
+        {helperMessage}
       </Typography>
       {totalCalories ? (
         <>
           <div className={styles.mealRow}>
             <span className={styles.mealName}>
-              {data.bf ? 'Breakfast:' : null}
+              {breakfastHeader}
             </span>
             <br />
             <Meal
@@ -50,7 +71,7 @@ export default function Meals({ token, date }) {
           </div>
           <div className={styles.mealRow}>
             <span className={styles.mealName}>
-              {data.lun ? 'Lunch:' : null}
+              {lunchHeader}
             </span>
             <br />
             <Meal
@@ -62,7 +83,7 @@ export default function Meals({ token, date }) {
           </div>
           <div className={styles.mealRow}>
             <span className={styles.mealName}>
-              {data.din ? 'Dinner:' : null}
+              {dinnerHeader}
             </span>
             <br />
             <Meal
@@ -74,7 +95,7 @@ export default function Meals({ token, date }) {
           </div>
           <div className={styles.mealRow}>
             <span className={styles.mealName}>
-              {data.extra ? 'Extra:' : null}
+              {extraHeader}
             </span>
             <br />
             <Meal
@@ -89,3 +110,4 @@ export default function Meals({ token, date }) {
     </>
   )
 }
+

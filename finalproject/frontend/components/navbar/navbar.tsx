@@ -38,7 +38,6 @@ export default function Navbar(props) {
   const handleClose = () => setOpen(false)
   return (
     <React.Fragment>
-      <CssBaseline />
       <HideOnScroll {...props}>
         <AppBar className={styles.navbar}>
           <Toolbar className={styles.links}>

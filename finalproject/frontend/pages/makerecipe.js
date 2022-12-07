@@ -9,6 +9,13 @@ import styles from '../styles/makerecipe.module.css'
 import { useRouter } from 'next/router'
 import { useTokenStore } from '../lib/store';
 import LoginModal from '../components/login_modal/login_modal';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
 
 export async function getStaticProps() {
   const ingredientList = await getAllIngredients()
@@ -84,7 +91,7 @@ export default function CustomRecipePage({ ingredientList, measuresList }) {
   }, [token])
 
   return (
-    <>
+    <CacheProvider value={cache}>
       <Head>
         <title>Make Custom Recipe</title>
         <meta name="description" content="Register your custom recipes and get caloric info" />
@@ -120,6 +127,6 @@ export default function CustomRecipePage({ ingredientList, measuresList }) {
             Submit
           </Button>
       </div>
-    </>
+    </CacheProvider>
   )
 }

@@ -10,6 +10,13 @@ import Navbar from '../components/navbar/navbar';
 import Head from 'next/head';
 import { useTokenStore, checkToken } from '../lib/store';
 import LoginModal from '../components/login_modal/login_modal';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
 
 export default function ExtractPage() {
   const token = useTokenStore(state => state.token)
@@ -34,7 +41,7 @@ export default function ExtractPage() {
   }, [token])
 
   return (
-    <>
+    <CacheProvider value={cache}>
       <Head>
         <title>Extract Recipes</title>
         <meta name="description" content="recipe extractor" />
@@ -66,7 +73,7 @@ export default function ExtractPage() {
         </LoadingButton>
         </FormControl>
       </div>
-    </>
+    </CacheProvider>
   )
 }
 

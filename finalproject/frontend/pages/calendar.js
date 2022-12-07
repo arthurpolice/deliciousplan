@@ -6,6 +6,13 @@ import Navbar from '../components/navbar/navbar';
 import Head from 'next/head';
 import { useTokenStore } from '../lib/store'
 import Meals from '../components/calendar/meals';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+
+const cache = createCache({
+  key: 'css',
+  prepend: true,
+});
 
 
 export default function CalendarPage() {
@@ -13,7 +20,7 @@ export default function CalendarPage() {
   const token = useTokenStore(state => state.token)
 
   return (
-    <div className='app'>
+    <CacheProvider value={cache}>
       <Head>
         <title>Calendar</title>
       </Head>
@@ -26,6 +33,6 @@ export default function CalendarPage() {
           <Calendar onChange={setDate} value={date} />
         </Paper>
       </div>
-    </div>
+    </CacheProvider>
   );
 }

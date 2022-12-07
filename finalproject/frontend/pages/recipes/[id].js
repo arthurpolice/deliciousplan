@@ -32,7 +32,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const recipeData = await getRecipeData(params.id)
-
+  if (!recipeData) {
+    return {
+      notFound: true
+    }
+  }
   return {
     props: {
       recipeData,
@@ -43,7 +47,6 @@ export async function getStaticProps({ params }) {
 export default function Recipe({ recipeData }) {
   const route = useRouter()
   const token = useTokenStore(state => state.token)
-  const changeToken = useTokenStore(state => state.addToken)
   const username = useTokenStore(state => state.username)
 
 
@@ -62,6 +65,11 @@ export default function Recipe({ recipeData }) {
       setDisabled(false)
     }
   }, [username, recipeData])
+
+  if (route.isFallback) {
+    return <div>Loading...</div>
+  }
+
   return (
     <>
       <Head>
