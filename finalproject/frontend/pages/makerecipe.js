@@ -61,7 +61,6 @@ export default function CustomRecipePage({ ingredientList, measuresList }) {
       ...prevState,
       [name]: value
     }))
-    console.log(recipe)
   }
 
   const handleClick = num => {

@@ -26,11 +26,14 @@ function HideOnScroll(props) {
 export default function Navbar(props) {
   const token = useTokenStore((state) => state.token)
   const [label, setLabel] = React.useState('Log Out')
+  const [register, setRegister] = React.useState(null)
   React.useEffect(() => {
     if (!token || token === '') {
       setLabel('Log In')
+      setRegister('Register')
     } else {
       setLabel('Log Out')
+      setRegister(null)
     }
   }, [token])
   const [open, setOpen] = React.useState(false)
@@ -41,24 +44,26 @@ export default function Navbar(props) {
       <HideOnScroll {...props}>
         <AppBar className={styles.navbar}>
           <Toolbar className={styles.links}>
-            <Link href={'/'}>
-              <Image
-                src={'/images/icon.png'}
-                alt='logo'
-                width={48}
-                height={48}
-              />
-            </Link>
-            <RecipesButton />
-            <Link href={'/calendar'} className={styles.link}>
-              Calendar
-            </Link>
-            <LogButton token={token} label={label} handleOpen={handleOpen} />
-            {token ? null : (
-              <Link className={styles.link} href={'/register'}>
-                Register
+            <div className={styles.linkButtons}>
+              <Link href={'/'}>
+                <Image
+                  src={'/images/icon.png'}
+                  alt='logo'
+                  width={48}
+                  height={48}
+                />
               </Link>
-            )}
+              <RecipesButton />
+              <Link href={'/calendar'} className={styles.link}>
+                Calendar
+              </Link>
+            </div>
+            <div className={styles.logButtonDiv}>
+              <LogButton token={token} label={label} handleOpen={handleOpen} />
+              <Link className={styles.logButton} href={'/register'}>
+                  {register}
+              </Link>
+            </div>
           </Toolbar>
         </AppBar>
       </HideOnScroll>

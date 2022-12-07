@@ -39,7 +39,9 @@ export default function Login({ handleClose }) {
           Log In
         </Button>
       </div>
-      <Typography variant='body2'>Or register <Link className={styles.register} href={'/register'}>here.</Link></Typography>
+      <div> 
+        <Link className={styles.register} href={'/register'}>Or register here.</Link>
+      </div>
     </form>
   )
 }
