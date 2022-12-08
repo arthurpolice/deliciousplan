@@ -1,10 +1,9 @@
 import requests
 import json
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from .models import Calendar, DailyPlan, Meal, User, MealComponent, Recipe, Ingredient, RecipeIngredient
+from knox.models import AuthToken
+from knox.settings import CONSTANTS
 
 
 def calorie_calc(age, sex, height, weight, bfat, energy_unit, formula):
@@ -239,10 +238,13 @@ def dictionary_sanitary_check(dictionary):
         dictionary['dairyFree'] = False
         
 def likesChecker(request, recipe):
+    token = request.headers.get("Authorization")
+    token = token[6:]
+    print(token)
+    #knox_object = AuthToken.objects.filter(token_key=token[:CONSTANTS.TOKEN_KEY_LENGTH]).first()
     likes = recipe.likes.all()
     likes_amount = len(likes)
     like_status = False
-    print(request.user)
     try:
         recipe.likes.get(user=request.user)
         like_status = True
