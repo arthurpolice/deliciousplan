@@ -294,8 +294,7 @@ def likes_handler(request):
     recipe = Recipe.objects.get(pk=recipe_id)
     user = request.user
     try:
-        print('like_try entered')
-        preexisting_like = recipe.likes.get(user=user)
+        recipe.likes.get(user=user)
         Like.remove_like(recipe, user)
     except:
         print('like exception entered')
@@ -310,7 +309,7 @@ def favorites_handler(request):
     recipe = Recipe.objects.get(pk=recipe_id)
     user = request.user
     try:
-        preexisting_favorite = user.favorites.get(recipe=recipe)
+        user.favorites.get(recipe=recipe)
         Favorite.remove_favorite(user, recipe)
     except:
         Favorite.add_favorite(user, recipe)
