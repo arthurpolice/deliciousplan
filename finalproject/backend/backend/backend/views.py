@@ -167,7 +167,7 @@ def log_recipe(dictionary):
     new_recipe.save()
     print(new_recipe)
     ingredients = new_recipe.recipe_ingredients.all()
-    print(ingredients)
+    print(ingredients.length())
     if ingredients == None or ingredients.length() == 0:
         new_recipe.delete()
         raise Exception('Invalid data.')
