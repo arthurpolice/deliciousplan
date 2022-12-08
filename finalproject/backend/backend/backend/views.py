@@ -13,7 +13,7 @@ from django.urls import reverse
 from django.forms.models import model_to_dict
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import Calendar, DailyPlan, Meal, User, MealComponent, Recipe, Ingredient, RecipeIngredient, Like, Favorite
-from .util import dictionary_sanitary_check, recipe_url_lookup, add_ingredients_to_recipe, get_day
+from .util import dictionary_sanitary_check, likesChecker, recipe_url_lookup, add_ingredients_to_recipe, get_day
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
 from .serializers import ChangePasswordSerializer
@@ -93,6 +93,11 @@ def get_all_recipes(request):
         recipe_dict = model_to_dict(recipe)
         # Pop recipe_ingredients field, because you can't serialize models as json
         recipe_dict.pop('recipe_ingredients')
+        
+        like_check = likesChecker(request, recipe)
+        recipe_dict['likesAmount'] = like_check.likes_amount
+        recipe_dict['likeStatus'] = like_check.like_status
+        
         recipe_list += [recipe_dict]
     return JsonResponse({'list': recipe_list})
 
@@ -102,11 +107,15 @@ def get_recipe(request, id):
     recipe = Recipe.objects.get(pk=id)
     recipe_dict = model_to_dict(recipe)
     ingredients = Recipe.list_ingredients(recipe)
-    # Pop recipe_ingredients field, because you can't serialize models as json
+    like_check = likesChecker(request, recipe)
+    
+    # Pop recipe_ingredients field, because you can't serialize raw objects in json
     recipe_dict.pop('recipe_ingredients')
     recipe_info = {
         "recipe": recipe_dict,
-        "ingredients": ingredients
+        "ingredients": ingredients,
+        "likesAmount": like_check.likes_amount,
+        "likeStatus": like_check.like_status
     }
     print(recipe_info)
     return JsonResponse({"info": recipe_info})
@@ -289,6 +298,7 @@ def likes_handler(request):
         Like.remove_like(recipe, user)
     except:
         Like.add_like(recipe, user)
+    return JsonResponse({"message": "Like action successful"})
 
 
 @api_view(['POST'])
@@ -302,6 +312,7 @@ def favorites_handler(request):
         Favorite.remove_favorite(user, recipe)
     except:
         Favorite.add_favorite(user, recipe)
+    return JsonResponse({"message": "Favorites action successful"})
 
 @api_view(['POST'])
 @permission_classes([AllowAny])

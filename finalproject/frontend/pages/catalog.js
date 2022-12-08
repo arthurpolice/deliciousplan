@@ -29,6 +29,9 @@ export default function CatalogPage({ recipeCatalog }) {
   const filteredRecipes = recipeCatalog.list.filter(entry => {
     return entry.name.toLowerCase().includes(searchField)
   })
+  useState(() => {
+    console.log(recipeCatalog)
+  }, [recipeCatalog])
   return (
     <CacheProvider value={cache}>
       <Head>

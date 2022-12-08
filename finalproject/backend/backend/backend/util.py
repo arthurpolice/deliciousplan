@@ -237,3 +237,17 @@ def dictionary_sanitary_check(dictionary):
         dictionary['dairyFree']
     except:
         dictionary['dairyFree'] = False
+        
+def likesChecker(request, recipe):
+    likes = recipe.likes.all()
+    likes_amount = len(likes)
+    like_status = False
+    try:
+        recipe.likes.get(user=request.user)
+        like_status = True
+    except:
+        pass
+    return ({
+        "likes_amount": likes_amount,
+        "like_status": like_status
+    })        

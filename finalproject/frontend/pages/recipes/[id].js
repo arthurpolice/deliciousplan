@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { getAllRecipeIds, getRecipeData, deleteRecipe } from '../../lib/recipes'
+import { getAllRecipeIds, getRecipeData, deleteRecipe, like } from '../../lib/recipes'
 import Ingredients from '../../components/recipes/ingredients'
 import styles from '../../styles/recipes.module.css'
 import { Parallax, Background } from 'react-parallax'
@@ -48,6 +48,8 @@ export default function Recipe({ recipeData }) {
   const route = useRouter()
   const token = useTokenStore(state => state.token)
   const username = useTokenStore(state => state.username)
+  const [heart, setHeart] = useState('black')
+  const [star, setStar] = useState('black')
 
 
   const [measurement, setMeasurement] = useState('grams')
@@ -65,6 +67,12 @@ export default function Recipe({ recipeData }) {
       setDisabled(false)
     }
   }, [username, recipeData])
+  
+    useEffect(() => {
+      if (recipeData.likeStatus === true) {
+        setHeart('red')
+      } 
+    })
 
   if (route.isFallback) {
     return <div>Loading...</div>
@@ -93,15 +101,15 @@ export default function Recipe({ recipeData }) {
           <Paper className={styles.paper} elevation={3}>
             <Paper className={styles.smallpaper} elevation={5}>
               <div className={styles.floatingButtons}>
-                <Fab className={styles.fabHeart} title='Like' aria-label='like'>
-                  <FontAwesomeIcon className={styles.heartIcon} icon={faHeart} />
+                <Fab className={styles.fabHeart} title='Like' aria-label='like' onClick={() => like(recipeData.recipe.id, token, setHeart)}>
+                  <FontAwesomeIcon className={styles.heartIcon} icon={faHeart} color={heart}/>
                 </Fab>
                 <Fab
                   className={styles.fabStar}
                   title='Favorite'
                   aria-label='favorite'
                 >
-                  <FontAwesomeIcon className={styles.starIcon} icon={faStar} />
+                  <FontAwesomeIcon className={styles.starIcon} icon={faStar} color={star}/>
                 </Fab>
                 <Fab
                   className={styles.fabAdd}

@@ -58,3 +58,19 @@ export async function addMeal(recipeId, mealType, date, servings, token, route) 
   console.log(response)
   route.push('/calendar')
 }
+
+export async function like(recipeId, token, setHeart) {
+  const sender = await fetch('https://riko.pythonanywhere.com/likes_handler', {
+    method: 'POST',
+    headers: {
+      'Accept': "application/json",
+      'Content-Type': "application/json",
+      'Authorization': `Token ${token}`
+    },
+    body: JSON.stringify({
+      recipeId
+    })
+  })
+  const response = sender.json()
+  setHeart('red')
+}
