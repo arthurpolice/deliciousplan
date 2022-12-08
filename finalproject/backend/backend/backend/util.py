@@ -238,8 +238,8 @@ def dictionary_sanitary_check(dictionary):
         dictionary['dairyFree'] = False
         
 def likesChecker(request, recipe):
-    token = request.headers.get("Authorization")
-    token = token[6:]
+    token = request.headers
+    #token = token[6:]
     print(token)
     #knox_object = AuthToken.objects.filter(token_key=token[:CONSTANTS.TOKEN_KEY_LENGTH]).first()
     likes = recipe.likes.all()
