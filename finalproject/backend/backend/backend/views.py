@@ -168,7 +168,7 @@ def log_recipe(dictionary):
     print(new_recipe)
     ingredients = new_recipe.recipe_ingredients.all()
     print(len(ingredients))
-    if ingredients == None or len(ingredients) == 0:
+    if ingredients == None or len(ingredients) == 0 or len(ingredients) > 50:
         new_recipe.delete()
         raise Exception('Invalid data.')
     # Return the recipe object
