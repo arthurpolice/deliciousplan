@@ -242,6 +242,7 @@ def likesChecker(request, recipe):
     likes = recipe.likes.all()
     likes_amount = len(likes)
     like_status = False
+    print(request.user)
     try:
         recipe.likes.get(user=request.user)
         like_status = True
