@@ -95,8 +95,8 @@ def get_all_recipes(request):
         recipe_dict.pop('recipe_ingredients')
         
         like_check = likesChecker(request, recipe)
-        recipe_dict['likesAmount'] = like_check.likes_amount
-        recipe_dict['likeStatus'] = like_check.like_status
+        recipe_dict['likesAmount'] = like_check['likes_amount']
+        recipe_dict['likeStatus'] = like_check['like_status']
         
         recipe_list += [recipe_dict]
     return JsonResponse({'list': recipe_list})
@@ -114,8 +114,8 @@ def get_recipe(request, id):
     recipe_info = {
         "recipe": recipe_dict,
         "ingredients": ingredients,
-        "likesAmount": like_check.likes_amount,
-        "likeStatus": like_check.like_status
+        "likesAmount": like_check['likes_amount'],
+        "likeStatus": like_check['like_status']
     }
     print(recipe_info)
     return JsonResponse({"info": recipe_info})
