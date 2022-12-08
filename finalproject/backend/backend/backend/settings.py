@@ -65,7 +65,7 @@ ROOT_URLCONF = 'backend.urls'
 
 CORS_ALLOWED_ORIGINS = [
     "https://delicious-plan.vercel.app",
-    '**',
+    'http://localhost:3000',
     '*'   
 ]
 
