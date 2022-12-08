@@ -68,11 +68,13 @@ export default function Recipe({ recipeData }) {
     }
   }, [username, recipeData])
   
-    useEffect(() => {
-      if (recipeData.likeStatus === true) {
-        setHeart('red')
-      } 
-    })
+  useEffect(() => {
+    if (recipeData.likeStatus === true) {
+      setHeart('red')
+    } 
+  })
+
+  useEffect(() => console.log(recipeData))
 
   if (route.isFallback) {
     return <div>Loading...</div>
