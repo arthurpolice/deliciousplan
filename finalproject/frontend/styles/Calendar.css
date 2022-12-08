@@ -47,6 +47,9 @@
 .react-calendar__navigation button:enabled:focus {
   background-color: #91f5b7;
 }
+.react-calendar__navigation__label {
+  min-width: 30vw;
+}
 
 .react-calendar__viewContainer {
   padding-top: 10vh;
