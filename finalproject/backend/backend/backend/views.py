@@ -294,9 +294,11 @@ def likes_handler(request):
     recipe = Recipe.objects.get(pk=recipe_id)
     user = request.user
     try:
+        print('like_try entered')
         preexisting_like = recipe.likes.get(user=user)
         Like.remove_like(recipe, user)
     except:
+        print('like exception entered')
         Like.add_like(recipe, user)
     return JsonResponse({"message": "Like action successful"})
 
