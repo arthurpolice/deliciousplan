@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from './navbar.module.css'
 import LogButton from './log_button'
+import UserButton from './user_button'
 import LoginModal from '../login_modal/login_modal'
 import RecipesButton from './recipes_button'
 import { parseCookies } from 'nookies'
@@ -40,7 +41,7 @@ export default function Navbar(props) {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
   return (
-    <React.Fragment>
+    <>
       <HideOnScroll {...props}>
         <AppBar className={styles.navbar}>
           <Toolbar className={styles.links}>
@@ -59,15 +60,12 @@ export default function Navbar(props) {
               </Link>
             </div>
             <div className={styles.logButtonDiv}>
-              <LogButton token={token} label={label} handleOpen={handleOpen} />
-              <Link className={styles.logButton} href={'/register'}>
-                  {register}
-              </Link>
+              <UserButton token={token} label={label} handleOpen={handleOpen} register={register}/>
             </div>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
       <LoginModal open={open} handleClose={handleClose} />
-    </React.Fragment>
+    </>
   )
 }
