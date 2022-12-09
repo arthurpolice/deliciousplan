@@ -1,26 +1,27 @@
 import { getRecipeCatalog } from '../lib/catalog'
-import Catalog from '../components/catalog/catalog';
-import styles from '../styles/catalog.module.css'
 import { Grid } from '@mui/material';
 import { useState } from 'react';
+import { CacheProvider } from '@emotion/react';
+import Catalog from '../components/catalog/catalog';
 import Navbar from '../components/navbar/navbar';
 import SearchBox from '../components/searchbox/searchbox';
 import Head from 'next/head'
-import { CacheProvider } from '@emotion/react';
 import createCache from '@emotion/cache';
+import nookies from 'nookies'
+import styles from '../styles/catalog.module.css'
 
 const cache = createCache({
   key: 'css',
   prepend: true,
 });
 
-export async function getStaticProps() {
-  const recipeCatalog = await getRecipeCatalog();
+export async function getServerSideProps(ctx) {
+  const cookies = nookies.get(ctx)
+  const recipeCatalog = await getRecipeCatalog(cookies);
   return {
     props: {
       recipeCatalog,
-    },
-    revalidate: 60,
+    }
   };
 }
 
@@ -29,9 +30,7 @@ export default function CatalogPage({ recipeCatalog }) {
   const filteredRecipes = recipeCatalog.list.filter(entry => {
     return entry.name.toLowerCase().includes(searchField)
   })
-  useState(() => {
-    console.log(recipeCatalog)
-  }, [recipeCatalog])
+
   return (
     <CacheProvider value={cache}>
       <Head>

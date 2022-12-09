@@ -7,7 +7,7 @@ import { InputLabel } from '@mui/material'
 import { useState } from 'react'
 import { addMeal } from '../../lib/recipes'
 import { useRouter } from 'next/router'
-import { useTokenStore } from '../../lib/store'
+import { parseCookies } from 'nookies'
 
 export default function MealModalContent({ id }) {
   const [meal, setMeal] = useState('')
@@ -15,9 +15,10 @@ export default function MealModalContent({ id }) {
   const [servings, setServings] = useState(1)
   const [error, setError] = useState('')
   const route = useRouter()
-  const token = useTokenStore(state => state.token)
+  const cookies = parseCookies()
+  const token = cookies.token
 
-  const handleServingsChange = event => {
+  const handleServingsChange = (event) => {
     if (isNumeric(event.target.value) === true) {
       setServings(Math.round(parseInt(event.target.value)))
     }
@@ -26,19 +27,14 @@ export default function MealModalContent({ id }) {
   const submitMeal = () => {
     if (day) {
       addMeal(id, meal, day['_d'], servings, token, route)
-      console.log(day)
-    }
-    else {
+    } else {
       setError('Invalid date.')
     }
   }
 
   function isNumeric(value) {
-    return /^\d+$/.test(value);
+    return /^\d+$/.test(value)
   }
-  React.useEffect(() => {
-    console.log(day)
-  }, [day])
 
   return (
     <>
@@ -70,7 +66,9 @@ export default function MealModalContent({ id }) {
       <div className={styles.buttonDiv}>
         <Button onClick={submitMeal}>Add</Button>
       </div>
-      <Typography color={'red'} variant='body2' component='p'>{error}</Typography>
+      <Typography color={'red'} variant='body2' component='p'>
+        {error}
+      </Typography>
     </>
   )
 }

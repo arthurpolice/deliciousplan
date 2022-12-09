@@ -1,40 +1,33 @@
-import Head from 'next/head'
-import { getAllRecipeIds, getRecipeData, deleteRecipe, like } from '../../lib/recipes'
-import Ingredients from '../../components/recipes/ingredients'
-import styles from '../../styles/recipes.module.css'
+import { getRecipeData, deleteRecipe, like } from '../../lib/recipes'
+import { faHeart, faStar, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core'
 import { Parallax, Background } from 'react-parallax'
 import { Fab } from '@mui/material'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import Head from 'next/head'
+import Image from 'next/image'
 import Paper from '@mui/material/Paper'
-import Summary from '../../components/recipes/summary'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
-import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
+import Summary from '../../components/recipes/summary'
 import Navbar from '../../components/navbar/navbar'
-import { faHeart, faStar, faTrashCan } from '@fortawesome/free-solid-svg-icons'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import MealModal from '../../components/meal_modal/meal_modal.tsx'
-import { useTokenStore } from '../../lib/store'
-import { useRouter } from 'next/router'
+import Ingredients from '../../components/recipes/ingredients'
+import styles from '../../styles/recipes.module.css'
+import nookies, { parseCookies } from 'nookies'
 
 library.add(faHeart, faStar, faTrashCan)
 
-export async function getStaticPaths() {
-  const paths = await getAllRecipeIds()
-  return {
-    paths,
-    fallback: true,
-  }
-}
-
-export async function getStaticProps({ params }) {
-  const recipeData = await getRecipeData(params.id)
+export async function getServerSideProps(ctx) {
+  const cookies = nookies.get(ctx)
+  const recipeData = await getRecipeData(ctx.query.id, cookies)
   if (!recipeData) {
     return {
-      notFound: true
+      notFound: true,
     }
   }
   return {
@@ -46,18 +39,18 @@ export async function getStaticProps({ params }) {
 
 export default function Recipe({ recipeData }) {
   const route = useRouter()
-  const token = useTokenStore(state => state.token)
-  const username = useTokenStore(state => state.username)
+  const cookies = parseCookies()
+  const token = cookies.token
+  const username = cookies.username
   const [heart, setHeart] = useState('black')
   const [star, setStar] = useState('black')
-
 
   const [measurement, setMeasurement] = useState('grams')
   const handleChange = (event) => {
     setMeasurement(event.target.value)
   }
 
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
@@ -67,14 +60,12 @@ export default function Recipe({ recipeData }) {
       setDisabled(false)
     }
   }, [username, recipeData])
-  
+
   useEffect(() => {
     if (recipeData.likeStatus === true) {
       setHeart('red')
-    } 
+    }
   })
-
-  useEffect(() => console.log(recipeData))
 
   if (route.isFallback) {
     return <div>Loading...</div>
@@ -86,7 +77,11 @@ export default function Recipe({ recipeData }) {
         <title>{recipeData.recipe.name}</title>
       </Head>
       <Navbar />
-      <MealModal open={open} handleClose={handleClose} id={recipeData.recipe.id}/>
+      <MealModal
+        open={open}
+        handleClose={handleClose}
+        id={recipeData.recipe.id}
+      />
       <div className={styles.main}>
         <Parallax className={styles.parallax} strength={300}>
           <Background className={styles.custombg}>
@@ -103,15 +98,28 @@ export default function Recipe({ recipeData }) {
           <Paper className={styles.paper} elevation={3}>
             <Paper className={styles.smallpaper} elevation={5}>
               <div className={styles.floatingButtons}>
-                <Fab className={styles.fabHeart} title='Like' aria-label='like' onClick={() => like(recipeData.recipe.id, token, setHeart)}>
-                  <FontAwesomeIcon className={styles.heartIcon} icon={faHeart} color={heart}/>
+                <Fab
+                  className={styles.fabHeart}
+                  title='Like'
+                  aria-label='like'
+                  onClick={() => like(recipeData.recipe.id, token, setHeart)}
+                >
+                  <FontAwesomeIcon
+                    className={styles.heartIcon}
+                    icon={faHeart}
+                    color={heart}
+                  />
                 </Fab>
                 <Fab
                   className={styles.fabStar}
                   title='Favorite'
                   aria-label='favorite'
                 >
-                  <FontAwesomeIcon className={styles.starIcon} icon={faStar} color={star}/>
+                  <FontAwesomeIcon
+                    className={styles.starIcon}
+                    icon={faStar}
+                    color={star}
+                  />
                 </Fab>
                 <Fab
                   className={styles.fabAdd}
@@ -127,14 +135,20 @@ export default function Recipe({ recipeData }) {
                 <Summary recipe={recipeData.recipe} />
               </div>
               <div className={styles.floatingButtons}>
-                <Fab 
+                <Fab
                   className={styles.fabDelete}
                   title='Delete'
                   aria-label='delete'
                   color='error'
                   disabled={disabled}
-                  onClick={() => deleteRecipe(recipeData.recipe.id, token, route)}>
-                    <FontAwesomeIcon className={styles.trashIcon} icon={faTrashCan}/>
+                  onClick={() =>
+                    deleteRecipe(recipeData.recipe.id, token, route)
+                  }
+                >
+                  <FontAwesomeIcon
+                    className={styles.trashIcon}
+                    icon={faTrashCan}
+                  />
                 </Fab>
               </div>
             </Paper>

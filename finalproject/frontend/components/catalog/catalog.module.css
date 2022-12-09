@@ -9,7 +9,7 @@
   border-radius: 10px;
   min-width: 345px;
   min-height: 388px;
-  cursor: pointer;  
+  cursor: pointer;
 }
 
 .content {
@@ -48,4 +48,11 @@
   align-items: center;
   justify-content: space-between;
   padding-bottom: 2vh;
+}
+
+.cardMedia {
+  display: flex;
+  justify-content: center;
+  background-image: url('../../public/images/healthy-food-icon.png');
+  font-size: 0;
 }

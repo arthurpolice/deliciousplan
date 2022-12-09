@@ -1,7 +1,6 @@
 import * as React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
-import CssBaseline from '@mui/material/CssBaseline'
 import useScrollTrigger from '@mui/material/useScrollTrigger'
 import Slide from '@mui/material/Slide'
 import Link from 'next/link'
@@ -9,8 +8,8 @@ import Image from 'next/image'
 import styles from './navbar.module.css'
 import LogButton from './log_button'
 import LoginModal from '../login_modal/login_modal'
-import { useTokenStore } from '../../lib/store'
 import RecipesButton from './recipes_button'
+import { parseCookies } from 'nookies'
 
 function HideOnScroll(props) {
   const { children } = props
@@ -24,7 +23,8 @@ function HideOnScroll(props) {
 }
 
 export default function Navbar(props) {
-  const token = useTokenStore((state) => state.token)
+  const cookies = parseCookies()
+  const token = cookies.token
   const [label, setLabel] = React.useState('Log Out')
   const [register, setRegister] = React.useState(null)
   React.useEffect(() => {

@@ -27,24 +27,24 @@ export default function Meals({ token, date }) {
 
   useEffect(() => {
     if (data) {
-    totalCalories
-      ? setDayCalories(`Calories: ${Math.round(totalCalories)}`)
-      : setDayCalories('Day not yet registered.')
-    totalCalories && data.targetCalories
-      ? setTargetCalories(`/${data.targetCalories}`)
-      : setTargetCalories(null)
-    totalCalories
-      ? setHelperMessage(null)
-      : setHelperMessage('Please add a meal from a recipe page.')
+      totalCalories
+        ? setDayCalories(`Calories: ${Math.round(totalCalories)}`)
+        : setDayCalories('Day not yet registered.')
+      totalCalories && data.targetCalories
+        ? setTargetCalories(`/${data.targetCalories}`)
+        : setTargetCalories(null)
+      totalCalories
+        ? setHelperMessage(null)
+        : setHelperMessage('Please add a meal from a recipe page.')
     }
   }, [totalCalories, data])
 
   useEffect(() => {
     if (data) {
-    data.bf ? setBreakfastHeader('Breakfast:') : setBreakfastHeader(null)
-    data.lun ? setLunchHeader('Lunch:') : setLunchHeader(null)
-    data.din ? setDinnerHeader('Dinner:') : setDinnerHeader(null)
-    data.extra ? setExtraHeader('Extra:') : setExtraHeader(null)
+      data.bf ? setBreakfastHeader('Breakfast:') : setBreakfastHeader(null)
+      data.lun ? setLunchHeader('Lunch:') : setLunchHeader(null)
+      data.din ? setDinnerHeader('Dinner:') : setDinnerHeader(null)
+      data.extra ? setExtraHeader('Extra:') : setExtraHeader(null)
     }
   }, [data])
 
@@ -55,7 +55,9 @@ export default function Meals({ token, date }) {
           {date.toLocaleDateString('en-GB', options)}
         </Typography>
         <br />
-        <Typography color={'white'} variant='h6' className={styles.calories}>Please log in.</Typography>
+        <Typography color={'white'} variant='h6' className={styles.calories}>
+          Please log in.
+        </Typography>
       </>
     )
   }

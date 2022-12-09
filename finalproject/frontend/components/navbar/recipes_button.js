@@ -1,32 +1,30 @@
-import { Link, Typography } from '@mui/material';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import { useState } from 'react';
-import styles from './navbar.module.css'
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react'
+import { Typography } from '@mui/material'
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import styles from './navbar.module.css'
 
 export default function RecipesButton() {
   const route = useRouter()
   const [anchorEl, setAnchorEl] = useState(null)
-  const handlePopOpen = event => {
+  const handlePopOpen = (event) => {
     setAnchorEl(event.currentTarget)
   }
   const handlePopClose = () => {
     setAnchorEl(null)
   }
-  const open = Boolean(anchorEl);
+  const open = Boolean(anchorEl)
   library.add(faCaretDown)
   return (
     <>
-      <Typography
-        onClick={handlePopOpen}
-        className={styles.link}
-      >
+      <Typography onClick={handlePopOpen} className={styles.link}>
         Recipes
-        <FontAwesomeIcon className={styles.caret} icon={faCaretDown}/>
+        <FontAwesomeIcon className={styles.caret} icon={faCaretDown} />
       </Typography>
       <Menu
         open={open}
@@ -43,16 +41,21 @@ export default function RecipesButton() {
         disableRestoreFocus
       >
         <MenuItem onClick={() => route.push('/catalog')}>
-          <Link href={'/catalog'} className={styles.menuItem}>Recipe Catalog</Link>
+          <Link href={'/catalog'} className={styles.menuItem}>
+            Recipe Catalog
+          </Link>
         </MenuItem>
         <MenuItem onClick={() => route.push('/extract')}>
-          <Link href={'/extract'} className={styles.menuItem}>Recipe Extractor</Link>
+          <Link href={'/extract'} className={styles.menuItem}>
+            Recipe Extractor
+          </Link>
         </MenuItem>
         <MenuItem onClick={() => route.push('/makerecipe')}>
-          <Link href={'/makerecipe'} className={styles.menuItem}>Make a Recipe</Link>
+          <Link href={'/makerecipe'} className={styles.menuItem}>
+            Make a Recipe
+          </Link>
         </MenuItem>
       </Menu>
     </>
   )
-
 }
