@@ -240,7 +240,7 @@ def dictionary_sanitary_check(dictionary):
 def likesChecker(request, recipe):
     print(request.user)
     likes = recipe.likes.all()
-    likes_amount = likes.count()
+    likes_amount = likes.object.count()
     like_status = False
     try:
         recipe.likes.get(user=request.user)
