@@ -27,10 +27,16 @@ export async function getServerSideProps(ctx) {
 
 export default function CatalogPage({ recipeCatalog }) {
   const [searchField, setSearchField] = useState('')
-  const filteredRecipes = recipeCatalog.list.filter(entry => {
+  const [likeFilter, setLikeFilter] = useState(null)
+  let filteredRecipes = recipeCatalog.list.filter(entry => {
     return entry.name.toLowerCase().includes(searchField)
   })
-
+  if (likeFilter === true) {
+    filteredRecipes = filteredRecipes.filter(entry => {
+      return entry.likeStatus === likeFilter
+    })
+  console.log(recipeCatalog)
+  }
   return (
     <CacheProvider value={cache}>
       <Head>
@@ -40,7 +46,7 @@ export default function CatalogPage({ recipeCatalog }) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <Navbar/>
-      <SearchBox setSearchField={setSearchField} />
+      <SearchBox setSearchField={setSearchField} setLikeFilter={setLikeFilter}/>
       <Grid container className={styles.catalog}>
         <Catalog recipeCatalog={filteredRecipes}/>
       </Grid>

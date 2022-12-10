@@ -76,6 +76,7 @@
   display: flex;
   justify-content: right;
   padding-top: 1rem;
+  align-items: center;
 }
 
 .fabAdd {
@@ -83,29 +84,9 @@
   z-index: 900;
 }
 
-.fabHeart {
-  margin-right: 1vw;
-  z-index: 900;
-  background-color: rgb(255, 255, 255);
-}
-
-.fabStar {
-  margin-right: 1vw;
-  z-index: 900;
-  background-color: rgb(255, 255, 255);
-}
-
 .fabDelete {
   margin-right: 1vw;
   margin-bottom: 1vh;
-}
-
-.heartIcon {
-  font-size: 1.5rem;
-}
-
-.starIcon {
-  font-size: 1.5rem;
 }
 
 .trashIcon {
@@ -120,4 +101,9 @@
     flex-direction: row;
     padding-bottom: 3vh;
   }
+}
+
+.checkBoxIcon {
+  height: 36px;
+  width: 36px;
 }

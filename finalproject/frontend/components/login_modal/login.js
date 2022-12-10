@@ -4,8 +4,10 @@ import { login } from '../../lib/login'
 import { setCookie } from 'nookies'
 import Link from 'next/link'
 import styles from './modal.module.css'
+import { useRouter } from 'next/router'
 
 export default function Login({ handleClose }) {
+  const route = useRouter()
   const [error, setError] = useState(false)
   const usernameRef = useRef()
   const passwordRef = useRef()
@@ -21,6 +23,7 @@ export default function Login({ handleClose }) {
         maxAge: 11 * 60 * 60,
       })
       handleClose()
+      route.reload()
     } else {
       setError(true)
     }

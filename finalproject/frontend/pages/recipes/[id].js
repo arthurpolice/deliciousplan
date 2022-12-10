@@ -1,18 +1,23 @@
-import { getRecipeData, deleteRecipe, like } from '../../lib/recipes'
-import { faHeart, faStar, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { getRecipeData, deleteRecipe, likeSubmit } from '../../lib/recipes'
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { Parallax, Background } from 'react-parallax'
 import { Fab } from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { Checkbox, FormControlLabel } from '@mui/material'
+import { pink, yellow } from '@mui/material/colors'
 import Head from 'next/head'
 import Image from 'next/image'
 import Paper from '@mui/material/Paper'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
+import Favorite from '@mui/icons-material/Favorite'
+import StarBorder from '@mui/icons-material/StarBorder'
+import Star from '@mui/icons-material/Star'
 import Summary from '../../components/recipes/summary'
 import Navbar from '../../components/navbar/navbar'
 import MealModal from '../../components/meal_modal/meal_modal.tsx'
@@ -20,7 +25,7 @@ import Ingredients from '../../components/recipes/ingredients'
 import styles from '../../styles/recipes.module.css'
 import nookies, { parseCookies } from 'nookies'
 
-library.add(faHeart, faStar, faTrashCan)
+library.add(faTrashCan)
 
 export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx)
@@ -42,8 +47,6 @@ export default function Recipe({ recipeData }) {
   const cookies = parseCookies()
   const token = cookies.token
   const username = cookies.username
-  const [heart, setHeart] = useState('black')
-  const [star, setStar] = useState('black')
 
   const [measurement, setMeasurement] = useState('grams')
   const handleChange = (event) => {
@@ -54,23 +57,38 @@ export default function Recipe({ recipeData }) {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const [disabled, setDisabled] = useState(true)
+  const [disabledDelete, setDisabledDelete] = useState(true)
   useEffect(() => {
     if (username === recipeData.recipe.credit) {
-      setDisabled(false)
+      setDisabledDelete(false)
     }
   }, [username, recipeData])
 
+  const [like, setLike] = useState(false)
+  const [favorite, setFavorite] = useState(false)
+  const [disabledCheck, setDisabledCheck] = useState(true)
+
   useEffect(() => {
     if (recipeData.likeStatus === true) {
-      setHeart('red')
+      setLike(true)
     }
   })
+
+  useEffect(() => {
+    if (token) {
+      setDisabledCheck(false)
+    }
+  })
+
+  const likeHandler = event => {
+    likeSubmit(recipeData.recipe.id, token)
+    setLike(event.target.checked)
+  }
 
   if (route.isFallback) {
     return <div>Loading...</div>
   }
-
+  
   return (
     <>
       <Head>
@@ -98,29 +116,42 @@ export default function Recipe({ recipeData }) {
           <Paper className={styles.paper} elevation={3}>
             <Paper className={styles.smallpaper} elevation={5}>
               <div className={styles.floatingButtons}>
-                <Fab
-                  className={styles.fabHeart}
-                  title='Like'
-                  aria-label='like'
-                  onClick={() => like(recipeData.recipe.id, token, setHeart)}
-                >
-                  <FontAwesomeIcon
-                    className={styles.heartIcon}
-                    icon={faHeart}
-                    color={heart}
-                  />
-                </Fab>
-                <Fab
-                  className={styles.fabStar}
-                  title='Favorite'
-                  aria-label='favorite'
-                >
-                  <FontAwesomeIcon
-                    className={styles.starIcon}
-                    icon={faStar}
-                    color={star}
-                  />
-                </Fab>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      className={styles.checkBox}
+                      checked={like}
+                      disabled={disabledCheck}
+                      icon={<FavoriteBorder className={styles.checkBoxIcon}/>}
+                      checkedIcon={<Favorite className={styles.checkBoxIcon}/>}
+                      sx={{
+                        color: pink[800],
+                        '&.Mui-checked': {
+                          color: pink[600],
+                        },
+                      }}
+                    />
+                  }
+                  onChange={(event) => likeHandler(event)}
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      className={styles.checkBox}
+                      checked={favorite}
+                      disabled={disabledCheck}
+                      icon={<StarBorder className={styles.checkBoxIcon}/>}
+                      checkedIcon={<Star className={styles.checkBoxIcon}/>}
+                      sx={{
+                        color: yellow[800],
+                        '&.Mui-checked': {
+                          color: yellow[600],
+                        },
+                      }}
+                    />
+                  }
+                  onChange={(event) => setFavorite(event.target.checked)}
+                />
                 <Fab
                   className={styles.fabAdd}
                   variant='extended'
@@ -140,7 +171,7 @@ export default function Recipe({ recipeData }) {
                   title='Delete'
                   aria-label='delete'
                   color='error'
-                  disabled={disabled}
+                  disabled={disabledDelete}
                   onClick={() =>
                     deleteRecipe(recipeData.recipe.id, token, route)
                   }

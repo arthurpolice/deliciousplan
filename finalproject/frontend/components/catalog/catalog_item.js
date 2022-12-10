@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSeedling } from '@fortawesome/free-solid-svg-icons'
+import { faSeedling, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { Grid, Grow } from '@mui/material'
 import Link from 'next/link'
 import Card from '@mui/material/Card'
@@ -13,7 +13,18 @@ import styles from './catalog.module.css'
 import 'tachyons'
 
 export default function CatalogItem({ recipe }) {
-  library.add(faSeedling)
+  library.add(faSeedling, faHeart)
+  const [heart, setHeart] = useState('black')
+
+  useEffect(() => {
+    if (recipe.likeStatus === true) {
+      setHeart('red')
+    }
+    else {
+      ('black')
+    }
+  }, [recipe])
+
   return (
     <Grow in={true} timeout={1000}>
       <Grid className={styles.catalogitem}>
@@ -93,6 +104,10 @@ export default function CatalogItem({ recipe }) {
                     )}
                   </span>
                 </div>
+              </div>
+              <div className={styles.likeSection} title='Likes'>
+                <FontAwesomeIcon className={styles.heartIcon} icon={faHeart} color={heart}/>
+                <Typography className={styles.likesAmount} variant='body2'>{ recipe.likesAmount }</Typography>
               </div>
             </CardContent>
           </Card>
