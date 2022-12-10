@@ -238,10 +238,11 @@ def dictionary_sanitary_check(dictionary):
         dictionary['dairyFree'] = False
         
 def likesChecker(request, recipe):
-    print(request.user)
-    likes = recipe.likes.get()
-    print(likes)
-    likes_amount = likes.count()
+    likes_section = recipe.likes.all()
+    print(likes_section)
+    likes = likes_section.get()
+    print(f"likes: {likes}")
+    likes_amount = likes.user.count()
     like_status = False
     try:
         recipe.likes.get(user=request.user)
