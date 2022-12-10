@@ -239,10 +239,9 @@ def dictionary_sanitary_check(dictionary):
         
 def likesChecker(request, recipe):
     likes_section = recipe.likes.all()
-    print(likes_section)
-    likes = likes_section.get()
-    print(f"likes: {likes}")
-    likes_amount = likes.user.count()
+    for like in likes_section:
+        occurrences = like.user.all().count()
+        print(f"occurrences: {occurrences}")
     like_status = False
     try:
         recipe.likes.get(user=request.user)
