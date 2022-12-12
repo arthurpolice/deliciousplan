@@ -11,10 +11,9 @@ def calorie_calc(age, sex, height, weight):
 
 
 def Mifflin(sex, age, height, weight):
-    BMR = (10*weight) + (6.25*height) - (5*age) + 5
     if sex == "female":
-        BMR = (10*weight) + (6.25*height) - (5*age) - 161
-    return BMR
+        return (10*weight) + (6.25*height) - (5*age) - 161
+    return (10*weight) + (6.25*height) - (5*age) + 5
 
 
 def recipe_url_lookup(recipe_url):

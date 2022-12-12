@@ -349,10 +349,10 @@ def get_calories(request):
 def log_calories(request):
     user = request.user
     data = json.loads(request.body)
-    height = data.get('height')
-    weight = data.get('weight')
-    age = data.get('age')
-    activity = data.get('activity')
+    height = int(data.get('height'))
+    weight = float(data.get('weight'))
+    age = int(data.get('age'))
+    activity = float(data.get('activity'))
     sex = data.get('sex')
     
     base = calorie_calc(age, sex, height, weight)

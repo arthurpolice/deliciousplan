@@ -11,6 +11,7 @@ export async function getCalories(token) {
     }
   )
   const response = await request.json()
+  return response.calories
 }
 
 export async function sendCalories(token, height, age, weight, sex, activity, setCalories) {
@@ -21,7 +22,7 @@ export async function sendCalories(token, height, age, weight, sex, activity, se
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `Token ${token}`,s
+        Authorization: `Token ${token}`
       },
       body: JSON.stringify({
         height,
