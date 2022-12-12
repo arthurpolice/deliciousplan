@@ -359,7 +359,7 @@ def log_calories(request):
     
     calories = base * activity
     
-    user.update(recommended_calories = calories)
+    user.recommended_calories = calories
     return JsonResponse({"calories": user.recommended_calories})
 
     
