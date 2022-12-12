@@ -357,7 +357,7 @@ def log_calories(request):
     
     base = calorie_calc(age, sex, height, weight)
     
-    calories = base * activity
+    calories = (base * activity) - 500
     
     user.recommended_calories = calories
     return JsonResponse({"calories": user.recommended_calories})

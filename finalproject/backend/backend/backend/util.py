@@ -7,7 +7,7 @@ from .models import Calendar, DailyPlan, Meal, User, MealComponent, Recipe, Ingr
 def calorie_calc(age, sex, height, weight):
     BMR = Mifflin(sex, age, height, weight)
     print(f"BMR: {BMR}")
-    return float(BMR)
+    return BMR
 
 
 
