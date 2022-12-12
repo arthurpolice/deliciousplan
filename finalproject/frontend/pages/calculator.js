@@ -15,7 +15,7 @@ export async function getServerSideProps(ctx) {
   const responseCalories = await getCalories(cookies.token);
   return {
     props: {
-      calories,
+      responseCalories,
     }
   };
 }

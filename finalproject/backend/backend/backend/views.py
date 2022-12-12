@@ -341,7 +341,9 @@ def get_all_measures(request):
 
 @api_view(['POST'])
 def get_calories(request):
-    return JsonResponse({"calories": request.user.recommended_calories})
+    calories = request.user.recommended_calories
+    print(calories)
+    return JsonResponse({"calories": calories})
 
 @api_view(['POST'])
 def log_calories(request):
