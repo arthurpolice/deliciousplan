@@ -58,7 +58,7 @@ export default function CalculatorPage({ responseCalories }) {
       <LoginModal open={openModal} handleClose={handleClose} />
       <div className={styles.main}>
         <Paper elevation={3} className={styles.paper}>
-          <Typography className={styles.title} variant='h4'>Your Calories</Typography>
+          <Typography className={styles.title} variant='h4'>Your Calories: { calories }</Typography>
           <div className={styles.row}>
             <IntegerSelect num={300} decimalSlots={0} variableName={Object.keys({height})} unit={'Cm'} setVariable={setHeight}/>
             <IntegerSelect num={5000} decimalSlots={1} variableName={Object.keys({weight})} unit={'Kg'} setVariable={setWeight}/>

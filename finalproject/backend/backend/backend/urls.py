@@ -23,5 +23,7 @@ urlpatterns = [
     path('login', LoginAPI.as_view(), name='login'),
     path('logout', knox_views.LogoutView.as_view(), name='logout'),
     path('logoutall', knox_views.LogoutAllView.as_view(), name='logoutall'),
-    path('change_password', views.ChangePasswordView.as_view(), name='change_password')
+    path('change_password', views.ChangePasswordView.as_view(), name='change_password'),
+    path('get_calories', views.get_calories, name='get_calories'),
+    path('log_calories', views.log_calories, name='log_calories')
 ]
