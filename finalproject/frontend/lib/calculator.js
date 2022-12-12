@@ -13,9 +13,9 @@ export async function getCalories(token) {
   const response = await request.json()
 }
 
-export async function sendCalories(height, age, weight, sex, activity) {
+export async function sendCalories(token, height, age, weight, sex, activity, setCalories) {
   const request = await fetch(
-    'https://riko.pythonanywhere.com/calculate_calories',
+    'https://riko.pythonanywhere.com/log_calories',
     {
       method: 'POST',
       headers: {
@@ -33,4 +33,6 @@ export async function sendCalories(height, age, weight, sex, activity) {
     }
   )
   const response = await request.json()
+  const calories = Math.round(response.calories)
+  setCalories(calories)
 }

@@ -13,7 +13,7 @@ from django.urls import reverse
 from django.forms.models import model_to_dict
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import Calendar, DailyPlan, Meal, User, MealComponent, Recipe, Ingredient, RecipeIngredient, Like, Favorite
-from .util import dictionary_sanitary_check, likesChecker, recipe_url_lookup, add_ingredients_to_recipe, get_day
+from .util import calorie_calc, dictionary_sanitary_check, likesChecker, recipe_url_lookup, add_ingredients_to_recipe, get_day
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, permission_classes
 from .serializers import ChangePasswordSerializer
@@ -338,3 +338,27 @@ def get_all_measures(request):
             if item['imperial_unit'].lower() not in units:
                 units += [item['imperial_unit'].lower()]
     return JsonResponse({"list": units})
+
+@api_view(['POST'])
+def get_calories(request):
+    return JsonResponse({"calories": request.user.recommended_calories})
+
+@api_view(['POST'])
+def log_calories(request):
+    user = request.user
+    data = json.loads(request.body)
+    height = data.get('height')
+    weight = data.get('weight')
+    age = data.get('age')
+    activity = data.get('activity')
+    sex = data.get('sex')
+    
+    base = calorie_calc(age, sex, height, weight)
+    
+    calories = base * activity
+    
+    user.update(recommended_calories = calories)
+    return JsonResponse({"calories": user.recommended_calories})
+
+    
+    

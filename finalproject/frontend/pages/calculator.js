@@ -4,25 +4,49 @@ import { parseCookies } from 'nookies'
 import { useEffect, useState } from 'react'
 import IntegerSelect from '../components/integer_select/integer_select'
 import Navbar from '../components/navbar/navbar'
+import { getCalories, sendCalories } from '../lib/calculator'
 import styles from '../styles/calculatorpage.module.css'
+import nookies from 'nookies'
+import LoginModal from '../components/login_modal/login_modal'
 
-export default function CalculatorPage() {
+
+export async function getServerSideProps(ctx) {
+  const cookies = nookies.get(ctx)
+  const responseCalories = await getCalories(cookies.token);
+  return {
+    props: {
+      calories,
+    }
+  };
+}
+
+export default function CalculatorPage({ responseCalories }) {
   const cookies = parseCookies()
   const token = cookies.token
+  const [openModal, setOpenModal] = useState(false)
+  const handleOpen = () => setOpenModal(true)
+  const handleClose = () => setOpenModal(false)
+
+  useEffect(() => {
+    if (!token || token === '') {
+      handleOpen()
+    }
+  }, [token])
 
   const [height, setHeight] = useState('0')
   const [weight, setWeight] = useState('0')
   const [age, setAge] = useState('0')
   const [sex, setSex] = useState('male')
   const [activity, setActivity] = useState('1.2')
-  const [calories, setCalories] = useState()
+  const [calories, setCalories] = useState(Math.round(responseCalories))
 
   const handleClick = () => {
-    console.log(height)
-    console.log(weight)
-    console.log(activity)
-    console.log(age)
-    console.log(sex)
+    if (!token) {
+      handleOpen()
+    }
+    else {
+      sendCalories(token, height, age, weight, sex, activity, setCalories)
+    }
   }
 
   return (
@@ -31,6 +55,7 @@ export default function CalculatorPage() {
         <title>Calculator</title>
       </Head>
       <Navbar />
+      <LoginModal open={openModal} handleClose={handleClose} />
       <div className={styles.main}>
         <Paper elevation={3} className={styles.paper}>
           <Typography className={styles.title} variant='h4'>Your Calories</Typography>
