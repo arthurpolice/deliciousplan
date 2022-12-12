@@ -17,6 +17,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  cursor: default;
 }
 
 .title {
@@ -55,20 +56,4 @@
   justify-content: center;
   background-image: url('../../public/images/healthy-food-icon.png');
   font-size: 0;
-}
-
-.likeSection {
-  display: flex;
-  align-items: center;
-  width: 15%;
-  justify-content: space-between;
-}
-
-.likesAmount {
-  margin-left: 1rem;
-}
-
-.heartIcon {
-  height: 24px;
-  width: 24px;
 }

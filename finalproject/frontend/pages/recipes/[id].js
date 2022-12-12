@@ -1,4 +1,4 @@
-import { getRecipeData, deleteRecipe, likeSubmit } from '../../lib/recipes'
+import { getRecipeData, deleteRecipe } from '../../lib/recipes'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { Parallax, Background } from 'react-parallax'
@@ -6,22 +6,18 @@ import { Fab } from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { Checkbox, FormControlLabel } from '@mui/material'
-import { pink, yellow } from '@mui/material/colors'
+import { FormControlLabel } from '@mui/material'
 import Head from 'next/head'
 import Image from 'next/image'
 import Paper from '@mui/material/Paper'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControl from '@mui/material/FormControl'
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder'
-import Favorite from '@mui/icons-material/Favorite'
-import StarBorder from '@mui/icons-material/StarBorder'
-import Star from '@mui/icons-material/Star'
 import Summary from '../../components/recipes/summary'
 import Navbar from '../../components/navbar/navbar'
 import MealModal from '../../components/meal_modal/meal_modal.tsx'
 import Ingredients from '../../components/recipes/ingredients'
+import LikeButton from '../../components/like_button/like_button'
 import styles from '../../styles/recipes.module.css'
 import nookies, { parseCookies } from 'nookies'
 
@@ -57,33 +53,14 @@ export default function Recipe({ recipeData }) {
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
+  const [likesAmount, setLikesAmount] = useState(recipeData.likesAmount)
+
   const [disabledDelete, setDisabledDelete] = useState(true)
   useEffect(() => {
     if (username === recipeData.recipe.credit) {
       setDisabledDelete(false)
     }
   }, [username, recipeData])
-
-  const [like, setLike] = useState(false)
-  const [favorite, setFavorite] = useState(false)
-  const [disabledCheck, setDisabledCheck] = useState(true)
-
-  useEffect(() => {
-    if (recipeData.likeStatus === true) {
-      setLike(true)
-    }
-  })
-
-  useEffect(() => {
-    if (token) {
-      setDisabledCheck(false)
-    }
-  })
-
-  const likeHandler = event => {
-    likeSubmit(recipeData.recipe.id, token)
-    setLike(event.target.checked)
-  }
 
   if (route.isFallback) {
     return <div>Loading...</div>
@@ -116,42 +93,7 @@ export default function Recipe({ recipeData }) {
           <Paper className={styles.paper} elevation={3}>
             <Paper className={styles.smallpaper} elevation={5}>
               <div className={styles.floatingButtons}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      className={styles.checkBox}
-                      checked={like}
-                      disabled={disabledCheck}
-                      icon={<FavoriteBorder className={styles.checkBoxIcon}/>}
-                      checkedIcon={<Favorite className={styles.checkBoxIcon}/>}
-                      sx={{
-                        color: pink[800],
-                        '&.Mui-checked': {
-                          color: pink[600],
-                        },
-                      }}
-                    />
-                  }
-                  onChange={(event) => likeHandler(event)}
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      className={styles.checkBox}
-                      checked={favorite}
-                      disabled={disabledCheck}
-                      icon={<StarBorder className={styles.checkBoxIcon}/>}
-                      checkedIcon={<Star className={styles.checkBoxIcon}/>}
-                      sx={{
-                        color: yellow[800],
-                        '&.Mui-checked': {
-                          color: yellow[600],
-                        },
-                      }}
-                    />
-                  }
-                  onChange={(event) => setFavorite(event.target.checked)}
-                />
+                <LikeButton className={styles.checkBox} recipe={recipeData} token={token} likesAmount={likesAmount} setLikesAmount={setLikesAmount}/>
                 <Fab
                   className={styles.fabAdd}
                   variant='extended'

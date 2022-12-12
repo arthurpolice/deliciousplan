@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSeedling, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faSeedling } from '@fortawesome/free-solid-svg-icons'
 import { Grid, Grow } from '@mui/material'
 import Link from 'next/link'
 import Card from '@mui/material/Card'
@@ -11,38 +11,36 @@ import Typography from '@mui/material/Typography'
 import Image from 'next/image'
 import styles from './catalog.module.css'
 import 'tachyons'
+import LikeButton from '../like_button/like_button'
+import { parseCookies } from 'nookies'
 
 export default function CatalogItem({ recipe }) {
-  library.add(faSeedling, faHeart)
-  const [heart, setHeart] = useState('black')
-
-  useEffect(() => {
-    if (recipe.likeStatus === true) {
-      setHeart('red')
-    }
-    else {
-      ('black')
-    }
-  }, [recipe])
+  const cookies = parseCookies()
+  const token = cookies.token
+  library.add(faSeedling)
+  const [likesAmount, setLikesAmount] = useState(recipe.likesAmount)
 
   return (
     <Grow in={true} timeout={1000}>
       <Grid className={styles.catalogitem}>
-        <Link href={`/recipes/${recipe.id}`}>
-          <Card className={`${styles.card} ${'grow'}`} sx={{ maxWidth: 345 }}>
-            <CardMedia
-              component='img'
-              alt={recipe.name}
-              height={250}
-              image={
-                recipe.image ? recipe.image : '/images/healthy-food-icon.png'
-              }
-              className={styles.cardMedia}
-            />
+          <Card className={styles.card} sx={{ maxWidth: 345 }}>
+            <Link href={`/recipes/${recipe.id}`}>
+              <CardMedia
+                className={`${styles.cardMedia} ${'grow'}`}
+                component='img'
+                alt={recipe.name}
+                height={250}
+                image={
+                  recipe.image ? recipe.image : '/images/healthy-food-icon.png'
+                }
+              />
+            </Link>
             <CardContent className={styles.content}>
-              <Typography className={styles.title} variant='h6' component='div'>
-                {recipe.name}
-              </Typography>
+              <Link href={`/recipes/${recipe.id}`}>
+                <Typography className={styles.title} variant='h6' component='div'>
+                  {recipe.name}
+                </Typography>
+              </Link>
               <div className={styles.info}>
                 <Typography variant='body2' color='text.secondary'>
                   Servings: {recipe.total_servings}
@@ -106,12 +104,10 @@ export default function CatalogItem({ recipe }) {
                 </div>
               </div>
               <div className={styles.likeSection} title='Likes'>
-                <FontAwesomeIcon className={styles.heartIcon} icon={faHeart} color={heart}/>
-                <Typography className={styles.likesAmount} variant='body2'>{ recipe.likesAmount }</Typography>
+                <LikeButton recipe={recipe} token={token} likesAmount={likesAmount} setLikesAmount={setLikesAmount}/>
               </div>
             </CardContent>
           </Card>
-        </Link>
       </Grid>
     </Grow>
   )

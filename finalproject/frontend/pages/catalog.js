@@ -35,7 +35,6 @@ export default function CatalogPage({ recipeCatalog }) {
     filteredRecipes = filteredRecipes.filter(entry => {
       return entry.likeStatus === likeFilter
     })
-  console.log(recipeCatalog)
   }
   return (
     <CacheProvider value={cache}>
