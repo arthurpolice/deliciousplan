@@ -47,6 +47,13 @@
 .title {
   text-align: center;
   margin-top: 5vh;
+  color: rgb(105, 101, 101);
+}
+
+.subTitle {
+  text-align: center;
+  margin-top: 1vh;
+  color: rgb(105, 101, 101);
 }
 
 .activity {
