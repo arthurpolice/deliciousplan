@@ -1,7 +1,7 @@
 import requests
 import json
 from django.http import JsonResponse
-from .models import Calendar, DailyPlan, Meal, User, MealComponent, Recipe, Ingredient, RecipeIngredient
+from .models import Calendar, Ingredient, RecipeIngredient
 
 
 def calorie_calc(age, sex, height, weight):
