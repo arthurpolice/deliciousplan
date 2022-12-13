@@ -96,4 +96,12 @@ This is a dynamically generated set of pages that represent every recipe contain
 It displays in-depth information about each recipe, with a breakdown of ingredients and measurements in multiple systems.
 
 
+## How to run
 
+The first step is to install all the dependencies, both on the backend and frontend.
+For the backend, you'll find the relevant libraries in requirements.txt.
+As for the frontend, npm install should be enough to have everything set.
+
+The fetch requests from the frontend are directed to a page I've hosted, so there is no need to really run your own django app. If you run "npm run dev" on the terminal from the frontend folder, you should be good to go! (I've allowed requests from 'http://localhost:3000', for ease of use).
+
+Alternatively, you can simply visit the NextJS page hosted at: https://delicious-plan.vercel.app/catalog !
