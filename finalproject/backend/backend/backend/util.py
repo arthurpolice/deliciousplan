@@ -6,16 +6,11 @@ from .models import Calendar, DailyPlan, Meal, User, MealComponent, Recipe, Ingr
 
 def calorie_calc(age, sex, height, weight):
     BMR = Mifflin(sex, age, height, weight)
-    print(f"BMR: {BMR}")
     return BMR
 
 
 
 def Mifflin(sex, age, height, weight):
-    print(sex)
-    print(age)
-    print(height)
-    print(weight)
     if sex == "female":
         return (10*weight) + (6.25*height) - (5*age) - 161
     return (10*weight) + (6.25*height) - (5*age) + 5
@@ -67,6 +62,7 @@ def get_grams_amount(ingredient, item):
 
     return grams_amount
 
+# Function to properly direct the recipe's measurements to be converted to grams.
 def convert(ingredient, imperial_amount, metric_amount, imperial_unit, metric_unit):
     if metric_amount != None and metric_amount != 0:
         grams_amount = api_gram_conversion(
@@ -144,7 +140,6 @@ def get_ingredient(item):
         elif item['nameClean'] == None:
             item['nameClean'] = 'Error'
             item['id'] = -1
-        print(item['id'], item['nameClean'])
         # POSSIBLE SOLUTION: CHANGE THIS TO FILTER AND RETURN THE FIRST QUERY RESULT?
         ingredient = Ingredient.objects.get(api_id=item['id'], name=item['nameClean'])
       # If not found, log the ingredient:
@@ -195,7 +190,7 @@ def get_day(request):
     day = calendar.days.get(date=date)
     return day
     
-
+# Make sure that the dictionary has the following keys (sometimes not all of these come from Spoonacular.)
 def dictionary_sanitary_check(dictionary):
     try:
         dictionary['ketogenic']
@@ -217,7 +212,8 @@ def dictionary_sanitary_check(dictionary):
         dictionary['dairyFree']
     except:
         dictionary['dairyFree'] = False
-        
+
+# Manipulates the like buttons in the frontend.
 def likesChecker(request, recipe):
     likes_section = recipe.likes.all()
     likes_amount = 0

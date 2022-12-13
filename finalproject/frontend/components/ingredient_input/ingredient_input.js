@@ -14,6 +14,9 @@ export default function IngredientInput({
   const [unit, setUnit] = useState('')
   const [amount, setAmount] = useState(0)
 
+  // This prepares the fields to be inserted in the recipe object from the custom recipe page.
+  // We have to make null fields for the unused measuring system to keep things consistent with spoonacular.
+  // Every time these values change, we ship them to the recipe object to be sent to the backend at any time.
   useEffect(() => {
     const measures = {
       us: {
@@ -42,6 +45,8 @@ export default function IngredientInput({
     }))
   }
 
+  // These are part of the Autocomplete component that comes from Material UI.
+  // The options are the ingredient and measurement objects themselves
   const ingredientProps = {
     options: ingredientList,
     getOptionLabel: (option) => option.name.toUpperCase(),

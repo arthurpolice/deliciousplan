@@ -8,7 +8,8 @@ export default function IngredientForm({
   recipe,
   measuringSystem,
 }) {
-  // Used to iterate the components with for each
+
+  // Used to iterate the components with map
   const ingredientKeys = [...Array(ingredientNumber).keys()]
   return ingredientKeys.map((key) => {
     return (

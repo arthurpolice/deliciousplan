@@ -1,8 +1,13 @@
+import { useRouter } from 'next/router'
+import { CacheProvider } from '@emotion/react'
+import { useEffect } from 'react'
+import { Typography } from '@mui/material'
+import { parseCookies } from 'nookies'
 import Head from 'next/head'
 import Navbar from '../components/navbar/navbar'
 import styles from '../styles/Home.module.css'
-import { CacheProvider } from '@emotion/react'
 import createCache from '@emotion/cache'
+
 
 const cache = createCache({
   key: 'css',
@@ -10,6 +15,13 @@ const cache = createCache({
 })
 
 export default function Home() {
+  const cookies = parseCookies()
+  let username = cookies.username
+  const route = useRouter()
+  // Couldn't think of a homepage yet, so I'm redirecting to catalog.
+  useEffect(() => {
+    route.push('/catalog')
+  })
   return (
     <CacheProvider value={cache}>
       <div className={styles.container}>
@@ -20,6 +32,9 @@ export default function Home() {
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
         <Navbar />
+        <div className={styles.main}>
+          <Typography variant='h3'>Welcome, {username?username:'friend'}!</Typography>
+        </div>
       </div>
     </CacheProvider>
   )

@@ -9,6 +9,7 @@ import styles from './calendar.module.css'
 export default function Recipe({ recipe, date, mealType, setTotalCalories }) {
   const cookie = parseCookies()
   const token = cookie.token
+
   const [anchorEl, setAnchorEl] = useState(null)
   const handlePopOpen = (event) => {
     setAnchorEl(event.currentTarget)
@@ -17,13 +18,17 @@ export default function Recipe({ recipe, date, mealType, setTotalCalories }) {
     setAnchorEl(null)
   }
   const open = Boolean(anchorEl)
+
+  // This hides the recipes when the user deletes them, so we don't need to refresh the page.
   const [visibility, setVisibility] = useState(true)
+  
   const removeMeal = () => {
     removeRecipe(token, recipe.recipe_id, date, mealType)
     setVisibility(false)
     setTotalCalories((previous) => previous - recipe.calories)
     handlePopClose()
   }
+
   return (
     <>
       {visibility ? (

@@ -325,6 +325,7 @@ def get_all_ingredients(request):
         ingredient_list += [dict]
     return JsonResponse({"list": ingredient_list})
 
+# This function supplies the custom recipe page with all the measurements ever logged into the database.
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def get_all_measures(request):
@@ -339,12 +340,13 @@ def get_all_measures(request):
                 units += [item['imperial_unit'].lower()]
     return JsonResponse({"list": units})
 
+# Sends the user's calories back to the frontend to be displayed in the calculator.
 @api_view(['POST'])
 def get_calories(request):
     calories = request.user.recommended_calories
-    print(calories)
     return JsonResponse({"calories": calories})
 
+# Receives the data from the calculator.
 @api_view(['POST'])
 def log_calories(request):
     user = request.user

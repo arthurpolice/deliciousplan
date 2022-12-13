@@ -1,3 +1,4 @@
+// This fetches the options for the ingredient field in the custom recipe page.
 export async function getAllIngredients() {
   const response = await fetch(
     'https://riko.pythonanywhere.com/get_all_ingredients',
@@ -14,6 +15,7 @@ export async function getAllIngredients() {
   return ingredients
 }
 
+// This fetches all the measurements that have ever been used in the database.
 export async function getAllMeasures() {
   const response = await fetch(
     'https://riko.pythonanywhere.com/get_all_measures',
@@ -30,6 +32,8 @@ export async function getAllMeasures() {
   return measures
 }
 
+// Blueprint for recipes
+// It mimics the recipes that come from Spoonacular, so the backend uses the same functions for both methods of logging a recipe.
 export function makeRecipeObject() {
   const object = {
     title: '',
@@ -56,37 +60,41 @@ export async function logRecipe(
   destroyCookie,
   handleOpen
 ) {
-  let slug = {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      recipe,
-    }),
-  }
+  // If there is authentication, we send a fetch request. We handle possible errors below.
   if (token) {
-    slug.headers = Object.assign(slug.headers, {
-      Authorization: `Token ${token}`,
-    })
-  }
-  const response = await fetch(
-    'https://riko.pythonanywhere.com/log_custom',
-    slug
-  )
-  const response_json = await response.json()
-  if ('detail' in response_json) {
-    if (
-      response_json.detail === 'Invalid token.' ||
-      response_json.detail === 'Invalid token header. No credentials provided.'
-    ) {
-      destroyCookie(null, 'token')
-      destroyCookie(null, 'username')
-      handleOpen()
+    const slug = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify({
+        recipe,
+      }),
+    }
+    const response = await fetch(
+      'https://riko.pythonanywhere.com/log_custom',
+      slug
+    )
+    const response_json = await response.json()
+    // Errors come in a key called "detail", so we respond to those.
+    if ('detail' in response_json) {
+      // If the cookie's token is invalid but still there, we delete the cookie. 
+      if (
+        response_json.detail === 'Invalid token.' ||
+        response_json.detail ===
+          'Invalid token header. No credentials provided.'
+      ) {
+        destroyCookie(null, 'token')
+        destroyCookie(null, 'username')
+        handleOpen()
+      }
+    } else {
+      const id = response_json['id']
+      router.push(`recipes/${id}`)
     }
   } else {
-    const id = response_json['id']
-    router.push(`recipes/${id}`)
+    handleOpen()
   }
 }

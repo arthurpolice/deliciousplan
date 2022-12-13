@@ -20,6 +20,7 @@ import Ingredients from '../../components/recipes/ingredients'
 import LikeButton from '../../components/like_button/like_button'
 import styles from '../../styles/recipes.module.css'
 import nookies, { parseCookies } from 'nookies'
+import LoginModal from '../../components/login_modal/login_modal'
 
 library.add(faTrashCan)
 
@@ -48,10 +49,18 @@ export default function Recipe({ recipeData }) {
   const handleChange = (event) => {
     setMeasurement(event.target.value)
   }
+  // Meal Modal Control
+  const [openMealModal, setOpenMealModal] = useState(false)
+  const handleCloseMealModal = () => setOpenMealModal(false)
 
-  const [open, setOpen] = useState(false)
-  const handleOpen = () => setOpen(true)
-  const handleClose = () => setOpen(false)
+  // Login Modal Control
+  const [openLoginModal, setOpenLoginModal] = useState(false)
+  const handleCloseLoginModal = () => setOpenLoginModal(false)
+
+  // Controls the behavior of the add meal button.
+  const handleOpen = () => {
+    token?setOpenMealModal(true):setOpenLoginModal(true)
+  }
 
   const [likesAmount, setLikesAmount] = useState(recipeData.likesAmount)
 
@@ -72,9 +81,13 @@ export default function Recipe({ recipeData }) {
         <title>{recipeData.recipe.name}</title>
       </Head>
       <Navbar />
+      <LoginModal 
+        open={openLoginModal}
+        handleClose={handleCloseLoginModal}
+      />
       <MealModal
-        open={open}
-        handleClose={handleClose}
+        open={openMealModal}
+        handleClose={handleCloseMealModal}
         id={recipeData.recipe.id}
       />
       <div className={styles.main}>

@@ -1,4 +1,3 @@
-import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import {
   getAllIngredients,
@@ -10,13 +9,13 @@ import { destroyCookie, parseCookies } from 'nookies'
 import { CacheProvider } from '@emotion/react'
 import { useRouter } from 'next/router'
 import { Button } from '@mui/material'
+import Head from 'next/head'
 import IngredientForm from '../components/ingredient_input/ingredient_form'
 import Navbar from '../components/navbar/navbar'
 import Header from '../components/ingredient_input/header'
 import styles from '../styles/makerecipe.module.css'
 import LoginModal from '../components/login_modal/login_modal'
 import createCache from '@emotion/cache'
-
 
 const cache = createCache({
   key: 'css',
@@ -38,19 +37,36 @@ export default function CustomRecipePage({ ingredientList, measuresList }) {
   const cookies = parseCookies()
   const token = cookies.token
   const route = useRouter()
-  const recipeProp = makeRecipeObject()
-  const [ingredientNumber, setIngredientNumber] = useState(1)
-  const [recipe, setRecipe] = useState(recipeProp)
-  const [measuringSystem, setMeasuringSystem] = useState('metric')
-  const [openModal, setOpenModal] = useState(false)
 
+  // Provides a blueprint for the fetch request to be sent
+  const recipeProp = makeRecipeObject()
+  const [recipe, setRecipe] = useState(recipeProp)
+
+  // Controls the amount of ingredient rows to show in the page using the recipe object
+  const [ingredientNumber, setIngredientNumber] = useState(1)
+
+  const handleClick = (num) => {
+    setIngredientNumber(ingredientNumber + num)
+    if (num === 1) {
+      recipe['extendedIngredients'].push({})
+    } else if (num === -1) {
+      recipe['extendedIngredients'].pop
+    }
+  }
+
+  const [measuringSystem, setMeasuringSystem] = useState('metric')
+
+  // Modal control
+  const [openModal, setOpenModal] = useState(false)
   const handleOpen = () => setOpenModal(true)
   const handleClose = () => setOpenModal(false)
 
+  // Used to make sure the servings field is a digit
   const isNumeric = (value) => {
     return /^\d+$/.test(value)
   }
 
+  // Function that builds the recipe piece by piece, field change by field change
   const fieldChange = (event) => {
     let { name, value } = event.target
     if (name === 'servings') {
@@ -66,15 +82,6 @@ export default function CustomRecipePage({ ingredientList, measuresList }) {
     }))
   }
 
-  const handleClick = (num) => {
-    setIngredientNumber(ingredientNumber + num)
-    if (num === 1) {
-      recipe['extendedIngredients'].push({})
-    } else if (num === -1) {
-      recipe['extendedIngredients'].pop
-    }
-  }
-
   // Checkbox names must match the key names in recipeProp
   const checkboxChange = (event) => {
     const { name, checked } = event.target
@@ -84,6 +91,7 @@ export default function CustomRecipePage({ ingredientList, measuresList }) {
     }))
   }
 
+  // Authentication check
   useEffect(() => {
     if (!token || token === '') {
       handleOpen()

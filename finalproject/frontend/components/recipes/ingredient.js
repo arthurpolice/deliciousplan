@@ -9,6 +9,7 @@ export default function Ingredient({ ingredient, measurement }) {
   const [amount, setAmount] = useState(0)
   const [unit, setUnit] = useState('')
 
+  // Hook for changing the displayed measuring system.
   useEffect(() => {
     switch (measurement) {
       case 'metric':

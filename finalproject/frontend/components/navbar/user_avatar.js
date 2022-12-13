@@ -35,6 +35,6 @@ export default function UserAvatar({ username, handlePopOpen }) {
     return <Avatar {...stringAvatar(`${username}`)} onClick={handlePopOpen}/>
   }
   else {
-    return <Avatar src='./images/user.png' onClick={handlePopOpen}/>
+    return <Avatar src='' onClick={handlePopOpen}/>
   }
 }

@@ -22,14 +22,14 @@ export default function ExtractPage() {
   const cookies = parseCookies()
   const token = cookies.token
   const route = useRouter()
-  const [url, setUrl] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [openModal, setOpenModal] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
-  const handleOpen = () => setOpenModal(true)
-  const handleClose = () => setOpenModal(false)
 
-  async function handleLoading(url, route) {
+  // Fetch and response control
+  const [url, setUrl] = useState('')
+  // Prevents spam of fetches
+  const [loading, setLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+
+  function handleLoading(url, route) {
     setLoading(true)
     sendUrl(
       url,
@@ -41,6 +41,11 @@ export default function ExtractPage() {
       handleOpen
     )
   }
+
+  // Modal control
+  const [openModal, setOpenModal] = useState(false)
+  const handleOpen = () => setOpenModal(true)
+  const handleClose = () => setOpenModal(false)
 
   useEffect(() => {
     if (!token || token === '') {

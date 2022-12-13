@@ -8,7 +8,6 @@ import { useState, useEffect } from 'react'
 import styles from './like_button.module.css'
 
 export default function LikeButton({ token, recipe, likesAmount, setLikesAmount }) {
-  console.log(recipe)
   const [like, setLike] = useState(false)
   const [disabledCheck, setDisabledCheck] = useState(true)
 

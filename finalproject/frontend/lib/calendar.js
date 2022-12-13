@@ -14,10 +14,13 @@ export async function dayFetcher(token, date, setData, setTotalCalories) {
     }
   )
   const response = await request.json()
+  // If the fetch is successful, it'll carry a "day" key, so we use that to check the success.
   if (response.day) {
     setData(response.day)
     setTotalCalories(response.day.totalCalories)
-  } else {
+  }
+  // If the fetch is unsuccessful, we render a message on the calendar.
+  else {
     setData(response.message)
     setTotalCalories(null)
   }
