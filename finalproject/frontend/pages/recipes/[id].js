@@ -79,6 +79,7 @@ export default function Recipe({ recipeData }) {
     <>
       <Head>
         <title>{recipeData.recipe.name}</title>
+        <link rel='icon' href='/favicon.ico' />
       </Head>
       <Navbar />
       <LoginModal 

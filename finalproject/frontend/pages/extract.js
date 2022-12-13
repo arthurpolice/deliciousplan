@@ -54,12 +54,10 @@ export default function ExtractPage() {
   }, [token])
 
   return (
-    <CacheProvider value={cache}>
+    <>
       <Head>
         <title>Extract Recipes</title>
-        <meta name='description' content='recipe extractor' />
         <link rel='icon' href='/favicon.ico' />
-        <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
       <Navbar />
       <LoginModal open={openModal} handleClose={handleClose} />
@@ -86,6 +84,6 @@ export default function ExtractPage() {
           </LoadingButton>
         </FormControl>
       </div>
-    </CacheProvider>
+    </>
   )
 }

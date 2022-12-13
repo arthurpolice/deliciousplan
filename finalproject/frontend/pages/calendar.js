@@ -23,6 +23,7 @@ export default function CalendarPage() {
     <CacheProvider value={cache}>
       <Head>
         <title>Calendar</title>
+        <link rel='icon' href='/favicon.ico' />
       </Head>
       <Navbar />
       <div className={styles.calendarDiv}>

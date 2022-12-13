@@ -99,15 +99,10 @@ export default function CustomRecipePage({ ingredientList, measuresList }) {
   }, [token])
 
   return (
-    <CacheProvider value={cache}>
+    <>
       <Head>
         <title>Make Custom Recipe</title>
-        <meta
-          name='description'
-          content='Register your custom recipes and get caloric info'
-        />
         <link rel='icon' href='/favicon.ico' />
-        <meta name='viewport' content='initial-scale=1, width=device-width' />
       </Head>
       <Navbar />
       <LoginModal open={openModal} handleClose={handleClose} />
@@ -149,6 +144,6 @@ export default function CustomRecipePage({ ingredientList, measuresList }) {
           Submit
         </Button>
       </div>
-    </CacheProvider>
+    </>
   )
 }

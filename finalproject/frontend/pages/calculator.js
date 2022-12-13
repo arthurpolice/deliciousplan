@@ -67,6 +67,7 @@ export default function CalculatorPage({ responseCalories }) {
     <>
       <Head>
         <title>Calculator</title>
+        <link rel='icon' href='/favicon.ico' />
       </Head>
       <Navbar />
       <LoginModal open={openModal} handleClose={handleClose} />
