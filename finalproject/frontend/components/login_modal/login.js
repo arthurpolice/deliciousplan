@@ -17,10 +17,10 @@ export default function Login({ handleClose }) {
     const token = await login(username, password)
     if (token) {
       setCookie(null, 'token', token, {
-        maxAge: 11 * 60 * 60,
+        maxAge: 8 * 60 * 60,
       })
       setCookie(null, 'username', username, {
-        maxAge: 11 * 60 * 60,
+        maxAge: 8 * 60 * 60,
       })
       handleClose()
       route.reload()

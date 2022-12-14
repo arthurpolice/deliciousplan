@@ -33,7 +33,7 @@ export default function NumberSelect({
       clearOnEscape
       name={variableName}
       onChange={(event) => {
-        setVariable(event.target.value)
+        setVariable(event.target.textContent)
       }}
       renderInput={(params) => (
         <TextField

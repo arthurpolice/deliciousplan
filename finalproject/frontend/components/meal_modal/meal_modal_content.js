@@ -26,6 +26,9 @@ export default function MealModalContent({ id }) {
       setError('Invalid date.')
     }
   }
+  React.useEffect(() => {
+    console.log(servings)
+  }, [servings])
 
   return (
     <>
