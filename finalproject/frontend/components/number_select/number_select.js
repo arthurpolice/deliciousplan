@@ -22,6 +22,19 @@ export default function NumberSelect({
   const firstLetter = word.charAt(0)
   const restOfWord = word.slice(1).toLowerCase()
   const label = firstLetter + restOfWord
+
+  // Autocomplete value giving trouble, this is a workaround.
+  const handleChange = event => {
+    if (event.target.value === 0) {
+      console.log('used text content')
+      setVariable(event.target.textContent)
+    }
+    else {
+      console.log('used value')
+      setVariable(event.target.value)
+    }
+  }
+
   return (
     <Autocomplete
       className={styles.field}
@@ -32,9 +45,7 @@ export default function NumberSelect({
       autoSelect={true}
       clearOnEscape
       name={variableName}
-      onChange={(event) => {
-        setVariable(event.target.textContent)
-      }}
+      onClose={handleChange}
       renderInput={(params) => (
         <TextField
           {...params}
