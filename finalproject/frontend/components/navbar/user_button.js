@@ -40,7 +40,7 @@ export default function UserButton({ token, label, handleOpen, register }) {
         onClose={handlePopClose}
         disableRestoreFocus
       >
-        <MenuItem>
+        <MenuItem onClick={handleOpen}>
           <LogButton token={token} label={label} handleOpen={handleOpen} />
         </MenuItem>
         <RegisterButton register={register} />
