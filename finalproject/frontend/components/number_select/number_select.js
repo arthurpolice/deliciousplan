@@ -26,11 +26,9 @@ export default function NumberSelect({
   // Autocomplete value giving trouble, this is a workaround.
   const handleChange = event => {
     if (event.target.value === 0) {
-      console.log('used text content')
       setVariable(event.target.textContent)
     }
     else {
-      console.log('used value')
       setVariable(event.target.value)
     }
   }
