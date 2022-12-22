@@ -117,7 +117,6 @@ def get_recipe(request, id):
         "likesAmount": like_check['likes_amount'],
         "likeStatus": like_check['like_status']
     }
-    print(recipe_info)
     return JsonResponse({"info": recipe_info})
 
 @api_view(['POST'])
