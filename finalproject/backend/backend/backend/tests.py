@@ -4,7 +4,7 @@ from .models import Calendar, DailyPlan, Meal, User, MealComponent, Recipe, Ingr
 
 
 
-#IMPORTANT: RUN THE COMMAND WITH --keepdb!
+#IMPORTANT: RUN THE TEST COMMAND WITH --keepdb! (python3 manage.py test --keepdb)
 class ExtractorTestCase(APITestCase):
   
   def setUp(self):
@@ -20,7 +20,6 @@ class ExtractorTestCase(APITestCase):
     response = self.client.post(reverse('extract_recipe'), {'url': 'https://www.allrecipes.com/recipe/24059/creamy-rice-pudding/'}, format='json')
     self.assertEqual(response.content, b'{"id": 1}')
   
-  # This is a really long test!
   def test_excessively_long_recipe(self):
     response = self.client.post(reverse('extract_recipe'), {'url': 'https://thewoksoflife.com/chinese-hot-pot-at-home/'}, format='json')
     self.assertEqual(response.content, b'{"error": "Invalid URL!"}')
