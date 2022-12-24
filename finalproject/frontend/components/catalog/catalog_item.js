@@ -7,7 +7,6 @@ import { parseCookies } from 'nookies'
 import Link from 'next/link'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import Image from 'next/image'
 import styles from './catalog.module.css'
@@ -27,13 +26,13 @@ export default function CatalogItem({ recipe }) {
       <Grid className={styles.catalogitem}>
         <Card className={styles.card} sx={{ maxWidth: 345 }}>
           <Link href={`/recipes/${recipe.id}`}>
-            <CardMedia
+            <Image
               className={`${styles.cardMedia} ${'grow'}`}
-              component='img'
               alt={recipe.name}
+              width={345}
               height={250}
-              image={
-                recipe.image ? recipe.image : '/images/healthy-food-icon.png'
+              src={
+                recipe.image
               }
             />
           </Link>

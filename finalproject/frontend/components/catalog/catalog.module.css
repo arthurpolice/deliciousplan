@@ -55,5 +55,9 @@
   display: flex;
   justify-content: center;
   background-image: url('../../public/images/healthy-food-icon.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
   font-size: 0;
+  object-fit: cover;
 }

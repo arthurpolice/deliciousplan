@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 export default function RegisterButton({ register }) {
-  route = useRouter()
+  const route = useRouter()
   if (register) {
     return (
       <MenuItem onClick={() => route.push('/register')}>

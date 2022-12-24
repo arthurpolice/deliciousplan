@@ -151,6 +151,7 @@ def get_ingredient(item):
         )
         # Call the spoonacular API to get calories per gram
         calories_per_gram = get_calories(1, item['id'])
+        print(f"{ingredient['nameClean']} called the expensive API because it didn't exist before.")
         ingredient.calories_per_gram = calories_per_gram
         ingredient.save()
     return ingredient
