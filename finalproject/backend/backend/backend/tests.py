@@ -23,3 +23,9 @@ class ExtractorTestCase(APITestCase):
   def test_excessively_long_recipe(self):
     response = self.client.post(reverse('extract_recipe'), {'url': 'https://thewoksoflife.com/chinese-hot-pot-at-home/'}, format='json')
     self.assertEqual(response.content, b'{"error": "Invalid URL!"}')
+  
+  # I forgot what page came out as empty. Will edit this if I run into the problem again.  
+  ## def test_empty_recipe(self):
+    ##response = self.client.post(reverse('extract_recipe'), {'url': 'https://thewoksoflife.com/chinese-hot-pot-at-home/'}, format='json')
+    ##self.assertEqual(response.content, b'{"error": "Invalid URL!"}')
+

@@ -140,7 +140,6 @@ def get_ingredient(item):
         elif item['nameClean'] == None:
             item['nameClean'] = 'Error'
             item['id'] = -1
-        # POSSIBLE SOLUTION: CHANGE THIS TO FILTER AND RETURN THE FIRST QUERY RESULT?
         ingredient = Ingredient.objects.get(api_id=item['id'], name=item['nameClean'])
       # If not found, log the ingredient:
     except:
@@ -151,7 +150,6 @@ def get_ingredient(item):
         )
         # Call the spoonacular API to get calories per gram
         calories_per_gram = get_calories(1, item['id'])
-        print(f"{ingredient['nameClean']} called the expensive API because it didn't exist before.")
         ingredient.calories_per_gram = calories_per_gram
         ingredient.save()
     return ingredient
@@ -231,4 +229,4 @@ def likesChecker(request, recipe):
     return ({
         "likes_amount": likes_amount,
         "like_status": like_status
-    })        
+    })
