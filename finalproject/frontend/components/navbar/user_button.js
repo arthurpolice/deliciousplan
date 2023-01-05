@@ -22,7 +22,6 @@ export default function UserButton({ token, label, handleOpen, register }) {
     setAnchorEl(null)
   }
   const open = Boolean(anchorEl)
-  console.log(token)
   return (
     <>
       <UserAvatar username={username} handlePopOpen={handlePopOpen} />

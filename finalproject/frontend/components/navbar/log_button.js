@@ -16,7 +16,6 @@ export default function LogButton ({ token, handleOpen, label }) {
       handleOpen()
     }
   }
-  console.log(token)
   return (
     <Link className={styles.logButton} variant='contained' onClick={() => handleLogin(label)}>{ label }</Link>
   )
