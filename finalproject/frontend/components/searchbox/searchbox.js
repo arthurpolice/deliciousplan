@@ -15,7 +15,7 @@ export default function SearchBox({ setSearchField, setLikeFilter }) {
     if (token) {
       setDisabled(false)
     }
-  })
+  }, [token])
 
 
   return (

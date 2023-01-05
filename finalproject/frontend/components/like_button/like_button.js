@@ -15,13 +15,13 @@ export default function LikeButton({ token, recipe, likesAmount, setLikesAmount 
     if (recipe.likeStatus === true) {
       setLike(true)
     }
-  }, [])
+  }, [recipe.likeStatus])
 
   useEffect(() => {
     if (token) {
       setDisabledCheck(false)
     }
-  }, [])
+  }, [token])
 
   const likeHandler = event => {
     const id = recipe.id?recipe.id:recipe.recipe.id

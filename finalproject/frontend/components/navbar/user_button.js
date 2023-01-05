@@ -11,7 +11,7 @@ export default function UserButton({ token, label, handleOpen, register }) {
   useEffect(() => {
     const cookies = parseCookies()
     setUsername(cookies.username)
-  })
+  }, [])
 
   const [anchorEl, setAnchorEl] = useState(null)
   const handlePopOpen = (event) => {
