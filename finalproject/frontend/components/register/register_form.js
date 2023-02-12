@@ -31,7 +31,7 @@ export default function RegisterForm() {
       }
       else {
         setError(true)
-        setErrorMessage("Username taken.")
+        setErrorMessage("Invalid username or email.")
       }
     }
     else {
