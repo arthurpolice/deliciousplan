@@ -1,5 +1,5 @@
 export async function logout(route, token, destroyCookie) {
-  const sender = await fetch('https://riko.pythonanywhere.com/logout', {
+  await fetch('https://riko.pythonanywhere.com/logout', {
     method: 'POST',
     headers: {
       Authorization: `Token ${token}`,
@@ -7,5 +7,5 @@ export async function logout(route, token, destroyCookie) {
   })
   destroyCookie(null, 'token')
   destroyCookie(null, 'username')
-  route.push('/')
+  route.reload()
 }

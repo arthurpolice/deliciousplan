@@ -42,7 +42,11 @@ export default function Navbar(props) {
 
   // Modal controllers
   const [open, setOpen] = React.useState(false)
-  const handleOpen = () => setOpen(true)
+  const handleOpen = () => {
+    if (!token){
+      setOpen(true)
+    }
+  }
   const handleClose = () => setOpen(false)
   return (
     <>
