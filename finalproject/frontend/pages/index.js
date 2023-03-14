@@ -35,7 +35,7 @@ export default function Home() {
                 <div className={styles.sectionText}>
                   <Typography className={styles.sectionTitle} variant='h5'>We&apos;re here to help you!</Typography>
                   <Typography variant='body1'>One of the most challenging aspects of dieting is calculating how many calories you&apos;re eating at every moment.</Typography>
-                  <Typography variant='body1'>This plays a big part in why losing weight is a big struggle, because us humans are notoriously bad at estimating the calories contained in a meal!</Typography>
+                  <Typography variant='body1'>This plays a big part in why losing weight is a big struggle, because we humans are notoriously bad at estimating the calories contained in a meal!</Typography>
                   <Typography variant='body1'>That&apos;s where we come in. Let us show you how we can help you in your weight loss journey.</Typography>
                 </div>
                 <div className={styles.sectionImage}>
